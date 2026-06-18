@@ -26,7 +26,7 @@
             overflow: hidden; 
         }
 
-        /* Left Control Panel Layout */
+        /* Left Control Panel */
         .control-panel { 
             width: 380px; 
             background: var(--panel-bg); 
@@ -42,7 +42,6 @@
             color: var(--text-main);
         }
 
-        /* Upgraded Brand Header Banner */
         .brand-banner {
             background: linear-gradient(135deg, #7c3aed, #ec4899);
             border-radius: 12px;
@@ -50,21 +49,9 @@
             text-align: center;
             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
         }
-        .brand-banner h1 {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        .brand-banner p { 
-            font-size: 0.78rem; 
-            color: rgba(255, 255, 255, 0.9); 
-            font-weight: 500; 
-            line-height: 1.3; 
-        }
+        .brand-banner h1 { font-size: 1.5rem; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .brand-banner p { font-size: 0.78rem; color: rgba(255, 255, 255, 0.9); font-weight: 500; line-height: 1.3; }
 
-        /* Live Feature Showcase badges */
         .showcase-box {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -122,7 +109,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
         }
         .file-name-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -153,12 +139,10 @@
             margin-top: 5px; 
         }
         .btn-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5); }
-        .btn-action:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
 
-        /* Right Preview Section Frame */
+        /* Preview Window Container */
         .preview-screen { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         
-        /* Celebration Confetti Radial Grid Canvas Background */
         .festive-canvas-bg {
             flex: 1;
             overflow-y: auto;
@@ -177,14 +161,7 @@
             position: relative;
         }
 
-        .feature-strip {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-            z-index: 10;
-        }
+        .feature-strip { display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; z-index: 10; }
         .feature-card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(8px);
@@ -195,131 +172,51 @@
             font-weight: 600;
             color: #ffffff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            letter-spacing: 0.3px;
         }
 
-        /* --- NEW: COMPREHENSIVE REWRITTEN DECORATIVE INTERFACE LAYOUTS --- */
-        .decor-left, .decor-right {
-            position: absolute;
-            top: 180px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            z-index: 2;
-        }
+        /* Decorative Elements */
+        .decor-left, .decor-right { position: absolute; top: 180px; display: flex; flex-direction: column; gap: 40px; z-index: 2; }
         .decor-left { left: 25px; align-items: center; }
         .decor-right { right: 25px; align-items: center; }
 
         .tambola-ball {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: 900;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+            width: 85px; height: 85px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: 900; color: white; box-shadow: 0 10px 30px rgba(0,0,0,.4);
             animation: floatBall 4s ease-in-out infinite;
         }
-
-        .ball-red { background: linear-gradient(135deg, #dc2626, #ef4444); animation-delay: 0s; }
+        .ball-red { background: linear-gradient(135deg, #dc2626, #ef4444); }
         .ball-blue { background: linear-gradient(135deg, #2563eb, #60a5fa); animation-delay: -1s; }
         .ball-green { background: linear-gradient(135deg, #059669, #34d399); animation-delay: -2s; }
         .ball-gold { background: linear-gradient(135deg, #d97706, #fbbf24); animation-delay: -3s; }
 
-        .trophy {
-            font-size: 90px;
-            animation: floatBall 5s ease-in-out infinite;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,.4));
-            animation-delay: -0.5s;
-        }
-
-        .tambola-cage {
-            font-size: 110px;
-            animation: spinCage 15s linear infinite;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
-            display: inline-block;
-        }
-
+        .trophy { font-size: 90px; animation: floatBall 5s ease-in-out infinite; filter: drop-shadow(0 10px 20px rgba(0,0,0,.4)); }
+        .tambola-cage { font-size: 110px; animation: spinCage 15s linear infinite; display: inline-block; }
         .jackpot {
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            color: #fff;
-            font-size: 20px;
-            font-weight: 900;
-            padding: 12px 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,.4);
-            text-align: center;
-            border: 2px solid #ffffff;
-            letter-spacing: 1px;
-            animation: floatBall 4.5s ease-in-out infinite;
-            animation-delay: -1.5s;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; font-size: 20px; font-weight: 900;
+            padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,.4); text-align:center; border: 2px solid #ffffff;
         }
 
-        /* CSS Animation Keyframes Engine */
-        @keyframes floatBall {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        @keyframes spinCage {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes floatBall { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes spinCage { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .preview-header { 
-            background: #fff; 
-            padding: 12px 24px; 
-            border-bottom: 1px solid #e2e8f0; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-shrink: 0;
-            z-index: 20;
+            background: #fff; padding: 12px 24px; border-bottom: 1px solid #e2e8f0; 
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; z-index: 20;
         }
         .preview-header-left { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #1e1b4b; }
         
         .btn-download {
-            background: var(--button-gradient);
-            color: white; border: none; padding: 10px 20px; border-radius: 8px;
+            background: var(--button-gradient); color: white; border: none; padding: 10px 20px; border-radius: 8px;
             font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
         }
 
-        /* Printable Paper Layout Box Frame */
+        /* Printable Paper Layout */
         #pdf-content { width: 210mm; background: white; box-shadow: 0 25px 60px rgba(0,0,0,0.5); border-radius: 6px; z-index: 10; position: relative; transform-origin: top center; }
-        .page { 
-            width: 210mm; 
-            height: 296mm; 
-            padding: 4mm 6mm; 
-            position: relative; 
-            overflow: hidden; 
-            page-break-after: always; 
-            box-sizing: border-box; 
-        }
+        .page { width: 210mm; height: 296mm; padding: 4mm 6mm; position: relative; overflow: hidden; page-break-after: always; box-sizing: border-box; }
         .page:last-child { page-break-after: avoid; }
         
-        .vertical-split-line { 
-            position: absolute; 
-            top: 0; bottom: 0; left: 50%; 
-            width: 0; 
-            border-left: 2px dotted #f43f5e; 
-            z-index: 10; 
-            pointer-events: none; 
-            opacity: 0.7;
-        }
-        
-        .tickets-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            grid-template-rows: repeat(6, 1fr); 
-            grid-auto-flow: column; 
-            gap: 6px 20px; 
-            height: 100%; 
-            width: 100%; 
-        }
+        .vertical-split-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 0; border-left: 2px dotted #f43f5e; z-index: 10; opacity: 0.7; }
+        .tickets-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); grid-auto-flow: column; gap: 6px 20px; height: 100%; width: 100%; }
         
         .ticket-box { border-radius: 8px; padding: 5px; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; }
         .ticket-header { display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt; font-weight: bold; margin-bottom: 4px; padding: 0 4px; }
@@ -329,31 +226,62 @@
         .ticket-id { font-size: 8pt; font-family: monospace; opacity: 0.9; letter-spacing: 0.5px; }
         
         .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #ffffff; border-radius: 4px; overflow: hidden; }
-        .tambola-table td { 
-            height: 33px; 
-            text-align: center; 
-            font-size: 14pt; 
-            font-weight: 800; 
-            width: 11.11%; 
-            vertical-align: middle; 
+        .tambola-table td { height: 33px; text-align: center; font-size: 14pt; font-weight: 800; width: 11.11%; vertical-align: middle; }
+
+        /* Watermark Layout CSS */
+        .page-watermark {
+            position: absolute; bottom: 5px; right: 15px; font-size: 8pt; font-weight: bold;
+            color: rgba(0,0,0,0.25); font-family: sans-serif; pointer-events: none;
         }
 
-        /* Responsive Breakpoint configurations */
+        /* --- MONETIZATION MODAL OVERLAY --- */
+        .premium-modal {
+            position: fixed; inset: 0; background: rgba(15, 7, 34, 0.85);
+            backdrop-filter: blur(10px); display: flex; align-items: center;
+            justify-content: center; z-index: 100; visibility: hidden; opacity: 0; transition: all 0.3s ease;
+        }
+        .premium-modal.active { visibility: visible; opacity: 1; }
+        .modal-card {
+            background: #ffffff; color: #1e1b4b; width: 90%; max-width: 460px;
+            padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 3px solid #db2777; transform: scale(0.9); transition: all 0.3s ease;
+        }
+        .premium-modal.active .modal-card { transform: scale(1); }
+        .modal-card h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; background: linear-gradient(135deg, #7c3aed, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .modal-card p { font-size: 0.9rem; color: #475569; margin-bottom: 20px; line-height: 1.5; }
+        .pricing-badge { background: #fff1f2; color: #db2777; font-size: 1.4rem; font-weight: 800; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 20px; border: 1px dashed #f43f5e; }
+        .modal-input { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 1rem; text-align: center; font-weight: bold; margin-bottom: 12px; }
+        .modal-input:focus { outline: none; border-color: #7c3aed; }
+        .btn-modal-close { background: #64748b; color: white; padding: 10px 16px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-left: 8px; }
+
         @media (max-width: 768px) {
             body { flex-direction: column; overflow-y: auto; height: auto; }
-            .control-panel { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); overflow-y: visible; padding: 16px; }
-            .preview-screen { width: 100%; height: auto; overflow: visible; }
+            .control-panel { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px; }
+            .preview-screen { width: 100%; height: auto; }
             .preview-header { position: sticky; top: 0; z-index: 30; padding: 10px 16px; color: #1e1b4b; }
-            .festive-canvas-bg { padding: 10px; overflow-x: hidden; overflow-y: visible; min-height: 400px; }
+            .festive-canvas-bg { padding: 10px; min-height: 400px; }
             .decor-left, .decor-right, .feature-strip { display: none; }
             #pdf-content { transform: scale(0.42); margin-bottom: -170mm; }
-        }
-        @media (max-width: 480px) {
-            #pdf-content { transform: scale(0.33); margin-bottom: -195mm; }
         }
     </style>
 </head>
 <body>
+
+    <div class="premium-modal" id="paywall-modal">
+        <div class="modal-card">
+            <h3>👑 Unlock Premium Access</h3>
+            <p>You've reached the free generation limit (Max 10 pages / 120 tickets). Upgrade to generate up to 100 pages instantly and completely remove the footer watermark logo!</p>
+            <div class="pricing-badge">Special Offer: ₹199 Only</div>
+            <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 8px;">To activate, send payment via UPI to: <span style="color:#7c3aed; font-weight:800;">yourupi@okaxis</span> then share screenshot to WhatsApp.</p>
+            
+            <input type="text" class="modal-input" id="premium-key-input" placeholder="Enter Your Premium Key Here">
+            
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button class="btn-action" id="btn-activate-premium" style="margin:0; padding: 10px 24px;">Activate Key 🔓</button>
+                <button class="btn-modal-close" id="btn-close-modal">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <div class="control-panel">
         <div class="brand-banner">
@@ -362,26 +290,24 @@
         </div>
 
         <div class="showcase-box">
-            <span class="showcase-title">⭐ Featured Live Themes</span>
+            <span class="showcase-title" id="status-badge">⭐ Free Version (Max 10 Pages)</span>
             <div class="showcase-grid">
-                <div class="showcase-badge">💎 Premium Club</div>
-                <div class="showcase-badge">👑 Royal Gold</div>
-                <div class="showcase-badge">🎪 Festival Style</div>
-                <div class="showcase-badge">🎲 Casino Night</div>
+                <div class="showcase-badge">🎨 Unlimited Themes</div>
+                <div class="showcase-badge">🏢 Custom Branding</div>
+                <div class="showcase-badge">📄 PDF Export</div>
+                <div class="showcase-badge">⚡ Instant Gen</div>
             </div>
         </div>
 
         <div class="form-group">
             <label>Company / Club Name</label>
-            <input type="text" id="input-company" value="YOUR COMPANY NAME">
+            <input type="text" id="input-company" value="NOI (KOCHI)">
         </div>
 
         <div class="form-group">
             <label>Company Logo</label>
             <div class="file-upload-wrapper">
-                <label for="input-logo" class="custom-file-btn">
-                    📤 Upload Logo
-                </label>
+                <label for="input-logo" class="custom-file-btn">📤 Upload Logo</label>
                 <input type="file" id="input-logo" accept="image/*" style="display: none;">
                 <span class="file-name-text" id="file-name-label">default_star.png</span>
             </div>
@@ -394,42 +320,22 @@
 
         <div class="form-group">
             <label>Game Set Identifier (Lock Numbers)</label>
-            <div class="helper-text">
-                Want the <strong>exact same numbers</strong> in a different color theme? Keep this name identical.
-            </div>
+            <div class="helper-text">Want the <strong>exact same numbers</strong> in a different color theme? Keep this name identical.</div>
             <div style="display: flex; gap: 8px;">
                 <input type="text" id="input-seed-string" value="Sunday Premium Match">
-                <button id="btn-random-phrase" style="padding: 0 14px; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;" title="Roll a new random game identifier">🎲 New</button>
+                <button id="btn-random-phrase" style="padding:0 14px; background:#6366f1; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">🎲 New</button>
             </div>
         </div>
 
         <div class="form-group">
             <label>Theme & Layout Colors</label>
             <div class="color-pickers">
-                <div class="color-field">
-                    <input type="color" id="color-page-bg" value="#ffffff">
-                    <label for="color-page-bg">Page BG</label>
-                </div>
-                <div class="color-field">
-                    <input type="color" id="color-bg" value="#fff5f5">
-                    <label for="color-bg">Card BG</label>
-                </div>
-                <div class="color-field">
-                    <input type="color" id="color-border" value="#f43f5e">
-                    <label for="color-border">Border</label>
-                </div>
-                <div class="color-field">
-                    <input type="color" id="color-grid" value="#f43f5e">
-                    <label for="color-grid">Grid Line</label>
-                </div>
-                <div class="color-field">
-                    <input type="color" id="color-company-font" value="#9e1c3f">
-                    <label for="color-company-font">Company</label>
-                </div>
-                <div class="color-field">
-                    <input type="color" id="color-font" value="#000000">
-                    <label for="color-font">Numbers</label>
-                </div>
+                <div class="color-field"><input type="color" id="color-page-bg" value="#ffffff"><label for="color-page-bg">Page BG</label></div>
+                <div class="color-field"><input type="color" id="color-bg" value="#fff5f5"><label for="color-bg">Card BG</label></div>
+                <div class="color-field"><input type="color" id="color-border" value="#f43f5e"><label for="color-border">Border</label></div>
+                <div class="color-field"><input type="color" id="color-grid" value="#f43f5e"><label for="color-grid">Grid Line</label></div>
+                <div class="color-field"><input type="color" id="color-company-font" value="#9e1c3f"><label for="color-company-font">Company</label></div>
+                <div class="color-field"><input type="color" id="color-font" value="#000000"><label for="color-font">Numbers</label></div>
             </div>
         </div>
 
@@ -462,8 +368,7 @@
                 <div class="jackpot">JACKPOT</div>
             </div>
 
-            <div id="pdf-content">
-                </div>
+            <div id="pdf-content"></div>
 
             <div class="decor-right">
                 <div class="tambola-ball ball-red">90</div>
@@ -475,131 +380,70 @@
     </div>
 
     <script>
-        // --- LOCALIZED SECURE RANDOM PATTERN GENERATOR ENGINE ---
-        let m_w, m_z;
-        const BIT_MASK = 0xffffffff;
+        // --- 1. PREMIUM VALIDATION TIMELINE ---
+        let isPremiumUser = false;
+        const PREMIUM_KEY_SECRET = "VIP-NOI-2026"; 
 
+        // --- 2. SEEDED RANDOM PATTERN GENERATOR ENGINE ---
+        let m_w, m_z; const BIT_MASK = 0xffffffff;
         function seedFromString(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                hash = str.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            m_w = (123456789 + hash) & BIT_MASK;
-            m_z = (987654321 - hash) & BIT_MASK;
+            let hash = 0; for (let i = 0; i < str.length; i++) { hash = str.charCodeAt(i) + ((hash << 5) - hash); }
+            m_w = (123456789 + hash) & BIT_MASK; m_z = (987654321 - hash) & BIT_MASK;
         }
-
         function getNextRandom() {
-            m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & BIT_MASK;
-            m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & BIT_MASK;
-            let result = ((m_z << 16) + m_w) & BIT_MASK;
-            result /= 4294967296;
-            return result + 0.5;
+            m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & BIT_MASK; m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & BIT_MASK;
+            let result = ((m_z << 16) + m_w) & BIT_MASK; result /= 4294967296; return result + 0.5;
         }
-
         function seededShuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(getNextRandom() * (i + 1));
-                let temp = array[i]; array[i] = array[j]; array[j] = temp;
-            }
+            for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(getNextRandom() * (i + 1)); let temp = array[i]; array[i] = array[j]; array[j] = temp; }
         }
 
-        // --- THE MATHEMATICAL TICKETING CORE ---
+        // --- 3. MATHEMATICAL TICKETING CORE ---
         function generateStrictSetOf6() {
             while (true) {
-                let pools = [
-                    Array.from({length: 9}, (_, i) => i + 1),   
-                    Array.from({length: 10}, (_, i) => i + 10), 
-                    Array.from({length: 10}, (_, i) => i + 20), 
-                    Array.from({length: 10}, (_, i) => i + 30), 
-                    Array.from({length: 10}, (_, i) => i + 40), 
-                    Array.from({length: 10}, (_, i) => i + 50), 
-                    Array.from({length: 10}, (_, i) => i + 60), 
-                    Array.from({length: 10}, (_, i) => i + 70), 
-                    Array.from({length: 11}, (_, i) => i + 80)  
-                ];
+                let pools = [Array.from({length: 9}, (_, i) => i + 1), Array.from({length: 10}, (_, i) => i + 10), Array.from({length: 10}, (_, i) => i + 20), Array.from({length: 10}, (_, i) => i + 30), Array.from({length: 10}, (_, i) => i + 40), Array.from({length: 10}, (_, i) => i + 50), Array.from({length: 10}, (_, i) => i + 60), Array.from({length: 10}, (_, i) => i + 70), Array.from({length: 11}, (_, i) => i + 80)];
                 pools.forEach(p => seededShuffle(p));
-
                 let colCounts = [9, 10, 10, 10, 10, 10, 10, 10, 11];
                 let tickets = Array.from({length: 6}, () => Array.from({length: 3}, () => Array(9).fill(0)));
                 let ticketColAllocations = Array.from({length: 6}, () => Array(9).fill(1));
                 let colRem = colCounts.map(c => c - 6);
-
                 let success = true;
                 for (let tIdx = 0; tIdx < 6; tIdx++) {
                     let allocated = 9; let attempts = 0;
-                    while (allocated < 15 && attempts < 100) {
-                        attempts++;
-                        let c = Math.floor(getNextRandom() * 9);
-                        if (ticketColAllocations[tIdx][c] < 3 && colRem[c] > 0) {
-                            ticketColAllocations[tIdx][c]++; colRem[c]--; allocated++;
-                        }
-                    }
+                    while (allocated < 15 && attempts < 100) { attempts++; let c = Math.floor(getNextRandom() * 9); if (ticketColAllocations[tIdx][c] < 3 && colRem[c] > 0) { ticketColAllocations[tIdx][c]++; colRem[c]--; allocated++; } }
                     if (allocated < 15) { success = false; break; }
                 }
-
                 if (!success || colRem.some(c => c !== 0)) continue;
-
                 for (let tIdx = 0; tIdx < 6; tIdx++) {
                     let rowCounts = [0, 0, 0];
                     for (let cIdx = 0; cIdx < 9; cIdx++) {
-                        let count = ticketColAllocations[tIdx][cIdx];
-                        let rows = [0, 1, 2]; seededShuffle(rows);
-                        let assigned = 0;
-                        for (let r of rows) {
-                            if (assigned < count && rowCounts[r] < 5) {
-                                tickets[tIdx][r][cIdx] = -1; rowCounts[r]++; assigned++;
-                            }
-                        }
+                        let count = ticketColAllocations[tIdx][cIdx]; let rows = [0, 1, 2]; seededShuffle(rows); let assigned = 0;
+                        for (let r of rows) { if (assigned < count && rowCounts[r] < 5) { tickets[tIdx][r][cIdx] = -1; rowCounts[r]++; assigned++; } }
                     }
                     if (rowCounts.some(rc => rc !== 5)) { success = false; break; }
                 }
-
                 if (!success) continue;
-
-                for (let cIdx = 0; cIdx < 9; cIdx++) {
-                    for (let tIdx = 0; tIdx < 6; tIdx++) {
-                        for (let rIdx = 0; rIdx < 3; rIdx++) {
-                            if (tickets[tIdx][rIdx][cIdx] === -1) {
-                                tickets[tIdx][rIdx][cIdx] = pools[cIdx].shift();
-                            }
-                        }
-                    }
-                }
-
+                for (let cIdx = 0; cIdx < 9; cIdx++) { for (let tIdx = 0; tIdx < 6; tIdx++) { for (let rIdx = 0; rIdx < 3; rIdx++) { if (tickets[tIdx][rIdx][cIdx] === -1) { tickets[tIdx][rIdx][cIdx] = pools[cIdx].shift(); } } } }
                 for (let tIdx = 0; tIdx < 6; tIdx++) {
                     for (let colIdx = 0; colIdx < 9; colIdx++) {
-                        let vals = [];
-                        for (let r = 0; r < 3; r++) {
-                            if (tickets[tIdx][r][colIdx] > 0) vals.push(tickets[tIdx][r][colIdx]);
-                        }
-                        vals.sort((a, b) => a - b);
-                        let valIdx = 0;
-                        for (let r = 0; r < 3; r++) {
-                            if (tickets[tIdx][r][colIdx] > 0) {
-                                tickets[tIdx][r][colIdx] = vals[valIdx++];
-                            }
-                        }
+                        let vals = []; for (let r = 0; r < 3; r++) { if (tickets[tIdx][r][colIdx] > 0) vals.push(tickets[tIdx][r][colIdx]); }
+                        vals.sort((a, b) => a - b); let valIdx = 0; for (let r = 0; r < 3; r++) { if (tickets[tIdx][r][colIdx] > 0) { tickets[tIdx][r][colIdx] = vals[valIdx++]; } }
                     }
                 }
                 return tickets;
             }
         }
+        function generatePageTickets() { return [...generateStrictSetOf6(), ...generateStrictSetOf6()]; }
 
-        function generatePageTickets() {
-            return [...generateStrictSetOf6(), ...generateStrictSetOf6()];
-        }
-
-        // --- UI INTERFACE CORE ---
+        // --- 4. UI INTERFACE CORE ---
         let base64Logo = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ec4899'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.133 9.21l8.2-1.192z'/></svg>";
-
         const animals = ["Panda", "Eagle", "Leopard", "Falcon", "Tiger", "Stallion", "Panther", "Rhino"];
         const colors = ["Golden", "Silver", "Crimson", "Emerald", "Sapphire", "Midnight", "Royal", "Amber"];
 
         document.getElementById('btn-random-phrase').addEventListener('click', function() {
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-            const randomNum = Math.floor(Math.random() * 90) + 1;
-            document.getElementById('input-seed-string').value = `${randomColor} ${randomAnimal} Match ${randomNum}`;
+            document.getElementById('input-seed-string').value = `${randomColor} ${randomAnimal} Match ${Math.floor(Math.random()*90)+1}`;
             startGeneration();
         });
 
@@ -607,11 +451,7 @@
             const file = e.target.files[0];
             if (file) {
                 document.getElementById('file-name-label').innerText = file.name;
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    base64Logo = event.target.result;
-                    startGeneration();
-                };
+                const reader = new FileReader(); reader.onload = function(event) { base64Logo = event.target.result; startGeneration(); };
                 reader.readAsDataURL(file);
             }
         });
@@ -622,9 +462,16 @@
             const canvas = document.getElementById('pdf-content');
             
             const companyName = document.getElementById('input-company').value;
-            const pageCount = parseInt(document.getElementById('input-pages').value) || 1;
+            let pageCount = parseInt(document.getElementById('input-pages').value) || 1;
             const seedText = document.getElementById('input-seed-string').value || "Default Game";
             
+            // --- UPDATED FIXED 10-PAGE FREE TIER TRIGGER ---
+            if (!isPremiumUser && pageCount > 10) {
+                document.getElementById('input-pages').value = 10;
+                pageCount = 10;
+                document.getElementById('paywall-modal').classList.add('active');
+            }
+
             const pageBgC = document.getElementById('color-page-bg').value;
             const bgC = document.getElementById('color-bg').value;
             const borderC = document.getElementById('color-border').value;
@@ -633,105 +480,75 @@
             const fontC = document.getElementById('color-font').value;
 
             seedFromString(seedText);
+            btnRefresh.disabled = true; btnDownload.disabled = true; canvas.innerHTML = ''; 
 
-            btnRefresh.disabled = true;
-            btnDownload.disabled = true;
-            canvas.innerHTML = ''; 
-
-            let ticketCounter = 1;
-            let currentPage = 0;
+            let ticketCounter = 1; let currentPage = 0;
 
             function generateNextPage() {
-                if (currentPage >= pageCount) {
-                    btnRefresh.disabled = false;
-                    btnDownload.disabled = false;
-                    btnRefresh.innerText = "Update Live Preview 🪄";
-                    return;
-                }
-
+                if (currentPage >= pageCount) { btnRefresh.disabled = false; btnDownload.disabled = false; btnRefresh.innerText = "Update Live Preview 🪄"; return; }
                 btnRefresh.innerText = `Generating (${currentPage + 1}/${pageCount})...`;
 
                 const pageData = generatePageTickets();
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'page';
-                pageDiv.style.backgroundColor = pageBgC; 
+                const pageDiv = document.createElement('div'); pageDiv.className = 'page'; pageDiv.style.backgroundColor = pageBgC; 
                 
-                const line = document.createElement('div');
-                line.className = 'vertical-split-line';
-                pageDiv.appendChild(line);
-
-                const grid = document.createElement('div');
-                grid.className = 'tickets-grid';
+                const line = document.createElement('div'); line.className = 'vertical-split-line'; pageDiv.appendChild(line);
+                const grid = document.createElement('div'); grid.className = 'tickets-grid';
 
                 pageData.forEach(ticket => {
-                    let ticketCode = `A${String(ticketCounter).padStart(4, '0')}`;
-                    ticketCounter++;
-
-                    let ticketHTML = `
-                        <div class="ticket-box" style="border: 2px solid ${borderC}; background-color: ${bgC};">
-                            <div class="ticket-header">
-                                <div class="brand-container" style="color: ${compFontC};">
-                                    <img src="${base64Logo}" class="company-logo" alt="Logo">
-                                    <span class="brand-text">${companyName}</span>
-                                </div>
-                                <div class="ticket-id" style="color: ${compFontC};">${ticketCode}</div>
-                            </div>
-                            <table class="tambola-table">
-                    `;
-
+                    let ticketCode = `A${String(ticketCounter).padStart(4, '0')}`; ticketCounter++;
+                    let ticketHTML = `<div class="ticket-box" style="border: 2px solid ${borderC}; background-color: ${bgC};"><div class="ticket-header"><div class="brand-container" style="color: ${compFontC};"><img src="${base64Logo}" class="company-logo" alt="Logo"><span class="brand-text">${companyName}</span></div><div class="ticket-id" style="color: ${compFontC};">${ticketCode}</div></div><table class="tambola-table">`;
                     for (let r = 0; r < 3; r++) {
                         ticketHTML += '<tr>';
                         for (let c = 0; c < 9; c++) {
-                            let val = ticket[r][c];
-                            let cellStyle = `border: 1px solid ${gridC}; color: ${fontC}; font-family: sans-serif; font-weight:800;`;
-                            if (val === 0) {
-                                ticketHTML += `<td style="${cellStyle} background-color: #ffffff;">&nbsp;</td>`;
-                            } else {
-                                ticketHTML += `<td style="${cellStyle} background-color: #ffffff;">${val}</td>`;
-                            }
+                            let val = ticket[r][c]; let cellStyle = `border: 1px solid ${gridC}; color: ${fontC}; font-family: sans-serif; font-weight:800;`;
+                            ticketHTML += (val === 0) ? `<td style="${cellStyle} background-color: #ffffff;">&nbsp;</td>` : `<td style="${cellStyle} background-color: #ffffff;">${val}</td>`;
                         }
                         ticketHTML += '</tr>';
                     }
-
-                    ticketHTML += '</table></div>';
-                    grid.innerHTML += ticketHTML;
+                    ticketHTML += '</table></div>'; grid.innerHTML += ticketHTML;
                 });
 
                 pageDiv.appendChild(grid);
+
+                // Add footer watermark if user is on the free tier
+                if (!isPremiumUser) {
+                    const watermark = document.createElement('div');
+                    watermark.className = 'page-watermark';
+                    watermark.innerText = "Generated By: Tambola Ticket Factory";
+                    pageDiv.appendChild(watermark);
+                }
+
                 canvas.appendChild(pageDiv);
-
-                currentPage++;
-                setTimeout(generateNextPage, 1);
+                currentPage++; setTimeout(generateNextPage, 1);
             }
-
             setTimeout(generateNextPage, 1);
         }
 
-        document.getElementById('btn-refresh').addEventListener('click', startGeneration);
+        // Modal Handlers
+        document.getElementById('btn-close-modal').addEventListener('click', () => { document.getElementById('paywall-modal').classList.remove('active'); });
         
-        document.getElementById('btn-download').addEventListener('click', function() {
-            const element = document.getElementById('pdf-content');
-            const btn = this;
-            btn.disabled = true;
-            btn.innerText = "Compiling PDF...";
-
-            const opt = {
-                margin:       0,
-                filename:     'Tambola_Factory_Tickets.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            html2pdf().set(opt).from(element).save().then(() => {
-                btn.disabled = false;
-                btn.innerText = "📥 Download High-Res PDF";
-            });
+        document.getElementById('btn-activate-premium').addEventListener('click', function() {
+            const keyEntered = document.getElementById('premium-key-input').value.trim();
+            if (keyEntered === PREMIUM_KEY_SECRET) {
+                isPremiumUser = true;
+                document.getElementById('status-badge').innerText = "👑 Premium Version Activated!";
+                document.getElementById('status-badge').style.color = "#f43f5e";
+                document.getElementById('paywall-modal').classList.remove('active');
+                alert("Success! Premium tier unlocked successfully. Enjoy unlimited page printing!");
+                startGeneration();
+            } else {
+                alert("Invalid Access Code. Please check payment confirmation or contact support.");
+            }
         });
 
-        window.onload = function() {
-            startGeneration();
-        };
+        document.getElementById('btn-refresh').addEventListener('click', startGeneration);
+        document.getElementById('btn-download').addEventListener('click', function() {
+            const element = document.getElementById('pdf-content'); const btn = this; btn.disabled = true; btn.innerText = "Compiling PDF...";
+            const opt = { margin: 0, filename: 'Tambola_Factory_Tickets.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+            html2pdf().set(opt).from(element).save().then(() => { btn.disabled = false; btn.innerText = "📥 Download High-Res PDF"; });
+        });
+
+        window.onload = function() { startGeneration(); };
     </script>
 </body>
 </html>
