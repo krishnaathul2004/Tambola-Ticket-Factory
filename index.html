@@ -9,10 +9,10 @@
         :root {
             --primary-gradient: linear-gradient(135deg, #7c3aed, #db2777);
             --button-gradient: linear-gradient(90deg, #9333ea, #ec4899);
-            --panel-bg: #ffffff;
-            --border-color: #f1f5f9;
-            --text-main: #1e1b4b;
-            --text-muted: #64748b;
+            --panel-bg: linear-gradient(180deg, #1a0938, #2d1357);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,65 +26,93 @@
             overflow: hidden; 
         }
 
-        /* Desktop Left Control Panel */
+        /* Left Control Panel Layout */
         .control-panel { 
             width: 380px; 
             background: var(--panel-bg); 
-            border-right: 1px solid #e2e8f0; 
+            border-right: 1px solid var(--border-color); 
             padding: 20px; 
             display: flex; 
             flex-direction: column; 
             gap: 15px; 
             overflow-y: auto; 
             flex-shrink: 0;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.3);
             z-index: 20;
+            color: var(--text-main);
         }
 
+        /* Upgraded Brand Header Banner */
         .brand-banner {
-            background: #fff0f6;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
             border-radius: 12px;
-            padding: 12px;
+            padding: 16px;
             text-align: center;
-            border: 1px dashed #f472b6;
-            position: relative;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
         }
         .brand-banner h1 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #7c3aed, #db2777);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
-        .brand-banner p { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+        .brand-banner p { 
+            font-size: 0.78rem; 
+            color: rgba(255, 255, 255, 0.9); 
+            font-weight: 500; 
+            line-height: 1.3; 
+        }
+
+        /* Live Feature Showcase badges */
+        .showcase-box {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .showcase-title { font-size: 0.8rem; font-weight: 700; color: #f472b6; text-transform: uppercase; letter-spacing: 0.5px; }
+        .showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .showcase-badge {
+            font-size: 0.75rem; background: rgba(255,255,255,0.08); padding: 6px; border-radius: 6px;
+            display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.04);
+        }
 
         .form-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
-        label { font-size: 0.85rem; font-weight: 700; color: #374151; }
+        label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; }
         
         .helper-text { 
-            font-size: 0.78rem; 
-            color: #4b5563; 
+            font-size: 0.75rem; 
+            color: #cbd5e1; 
             line-height: 1.4; 
-            background: #f3f4f6; 
+            background: rgba(255, 255, 255, 0.07); 
             padding: 8px 12px; 
             border-radius: 8px; 
-            border-left: 4px solid #8b5cf6; 
+            border-left: 4px solid #f472b6; 
         }
 
         input[type="text"], input[type="number"] { 
             width: 100%; 
             padding: 10px 12px; 
-            border: 1px solid #d1d5db; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
             border-radius: 8px; 
             font-size: 0.95rem; 
-            color: #1f2937;
-            background-color: #f9fafb;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.2);
             transition: all 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.25);
         }
 
         .file-upload-wrapper { display: flex; align-items: center; gap: 10px; }
         .custom-file-btn {
-            background: #4338ca;
+            background: #6366f1;
             color: white;
             padding: 10px 16px;
             border-radius: 8px;
@@ -94,6 +122,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
         }
         .file-name-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -102,12 +131,12 @@
             display: flex; 
             align-items: center; 
             gap: 8px; 
-            border: 1px solid #e5e7eb; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
             padding: 8px 12px; 
             border-radius: 8px; 
-            background: #f9fafb; 
+            background: rgba(0, 0, 0, 0.15); 
         }
-        .color-field label { font-size: 0.8rem; font-weight: 500; color: #4b5563; cursor: pointer; }
+        .color-field label { font-size: 0.78rem; font-weight: 500; color: #e2e8f0; cursor: pointer; }
         .color-field input[type="color"] { border: none; width: 24px; height: 24px; cursor: pointer; background: none; border-radius: 4px; }
         
         .btn-action { 
@@ -119,43 +148,126 @@
             font-size: 1rem; 
             font-weight: 700; 
             cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            transition: all 0.2s; 
             margin-top: 5px; 
         }
+        .btn-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5); }
+        .btn-action:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
 
         /* Right Preview Section Frame */
         .preview-screen { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         
+        /* Celebration Confetti Radial Grid Canvas Background */
         .festive-canvas-bg {
             flex: 1;
             overflow-y: auto;
             padding: 30px;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             background-color: #241442;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(147, 51, 234, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #160a29 0%, #290f4e 100%);
+            background-image:
+                radial-gradient(circle, #ffd700 1.2px, transparent 1.2px),
+                radial-gradient(circle, #ff69b4 1.2px, transparent 1.2px),
+                linear-gradient(135deg, #160a29, #290f4e);
+            background-size: 40px 40px, 60px 60px, 100% 100%;
+            background-position: 0 0, 20px 30px, 0 0;
             position: relative;
         }
 
-        /* Decorative Elements */
+        .feature-strip {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 10;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            letter-spacing: 0.3px;
+        }
+
+        /* --- NEW: COMPREHENSIVE REWRITTEN DECORATIVE INTERFACE LAYOUTS --- */
         .decor-left, .decor-right {
             position: absolute;
-            width: 140px;
-            height: 400px;
-            pointer-events: none;
-            opacity: 0.85;
+            top: 180px;
             display: flex;
             flex-direction: column;
             gap: 40px;
-            align-items: center;
-            z-index: 5;
+            z-index: 2;
         }
-        .decor-left { left: 20px; top: 25%; }
-        .decor-right { right: 20px; top: 22%; }
+        .decor-left { left: 25px; align-items: center; }
+        .decor-right { right: 25px; align-items: center; }
+
+        .tambola-ball {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+            animation: floatBall 4s ease-in-out infinite;
+        }
+
+        .ball-red { background: linear-gradient(135deg, #dc2626, #ef4444); animation-delay: 0s; }
+        .ball-blue { background: linear-gradient(135deg, #2563eb, #60a5fa); animation-delay: -1s; }
+        .ball-green { background: linear-gradient(135deg, #059669, #34d399); animation-delay: -2s; }
+        .ball-gold { background: linear-gradient(135deg, #d97706, #fbbf24); animation-delay: -3s; }
+
+        .trophy {
+            font-size: 90px;
+            animation: floatBall 5s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,.4));
+            animation-delay: -0.5s;
+        }
+
+        .tambola-cage {
+            font-size: 110px;
+            animation: spinCage 15s linear infinite;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.5));
+            display: inline-block;
+        }
+
+        .jackpot {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 900;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.4);
+            text-align: center;
+            border: 2px solid #ffffff;
+            letter-spacing: 1px;
+            animation: floatBall 4.5s ease-in-out infinite;
+            animation-delay: -1.5s;
+        }
+
+        /* CSS Animation Keyframes Engine */
+        @keyframes floatBall {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes spinCage {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
         .preview-header { 
             background: #fff; 
@@ -173,10 +285,11 @@
             background: var(--button-gradient);
             color: white; border: none; padding: 10px 20px; border-radius: 8px;
             font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
         }
 
         /* Printable Paper Layout Box Frame */
-        #pdf-content { width: 210mm; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-radius: 4px; z-index: 10; position: relative; transform-origin: top center; }
+        #pdf-content { width: 210mm; background: white; box-shadow: 0 25px 60px rgba(0,0,0,0.5); border-radius: 6px; z-index: 10; position: relative; transform-origin: top center; }
         .page { 
             width: 210mm; 
             height: 296mm; 
@@ -225,54 +338,18 @@
             vertical-align: middle; 
         }
 
-        /* --- SMART RESPONSIVE MOBILE MEDIA QUERIES --- */
+        /* Responsive Breakpoint configurations */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-                overflow-y: auto;
-                height: auto;
-            }
-            .control-panel {
-                width: 100%;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid #e2e8f0;
-                overflow-y: visible;
-                padding: 16px;
-            }
-            .preview-screen {
-                width: 100%;
-                height: auto;
-                overflow: visible;
-            }
-            .preview-header {
-                position: sticky;
-                top: 0;
-                z-index: 30;
-                padding: 10px 16px;
-            }
-            .festive-canvas-bg {
-                padding: 10px;
-                overflow-x: hidden;
-                overflow-y: visible;
-                min-height: 400px;
-            }
-            /* Hide large background vector illustrations on tiny screens to save room */
-            .decor-left, .decor-right {
-                display: none;
-            }
-            /* Scales down the giant A4 sheet view precisely so it fits on a phone screen */
-            #pdf-content {
-                transform: scale(0.42);
-                margin-bottom: -170mm; /* Pulls elements up to stop long empty gaps */
-            }
+            body { flex-direction: column; overflow-y: auto; height: auto; }
+            .control-panel { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); overflow-y: visible; padding: 16px; }
+            .preview-screen { width: 100%; height: auto; overflow: visible; }
+            .preview-header { position: sticky; top: 0; z-index: 30; padding: 10px 16px; color: #1e1b4b; }
+            .festive-canvas-bg { padding: 10px; overflow-x: hidden; overflow-y: visible; min-height: 400px; }
+            .decor-left, .decor-right, .feature-strip { display: none; }
+            #pdf-content { transform: scale(0.42); margin-bottom: -170mm; }
         }
-
         @media (max-width: 480px) {
-            #pdf-content {
-                transform: scale(0.33);
-                margin-bottom: -195mm;
-            }
+            #pdf-content { transform: scale(0.33); margin-bottom: -195mm; }
         }
     </style>
 </head>
@@ -280,13 +357,23 @@
 
     <div class="control-panel">
         <div class="brand-banner">
-            <h1>Tambola Factory</h1>
-            <p>Design & Print Custom Tickets</p>
+            <h1>🎰 TAMBOLA FACTORY</h1>
+            <p>Professional Tambola Ticket Generator for Clubs, Resorts & Events</p>
+        </div>
+
+        <div class="showcase-box">
+            <span class="showcase-title">⭐ Featured Live Themes</span>
+            <div class="showcase-grid">
+                <div class="showcase-badge">💎 Premium Club</div>
+                <div class="showcase-badge">👑 Royal Gold</div>
+                <div class="showcase-badge">🎪 Festival Style</div>
+                <div class="showcase-badge">🎲 Casino Night</div>
+            </div>
         </div>
 
         <div class="form-group">
             <label>Company / Club Name</label>
-            <input type="text" id="input-company" value="Your Company Name">
+            <input type="text" id="input-company" value="YOUR COMPANY NAME">
         </div>
 
         <div class="form-group">
@@ -296,7 +383,7 @@
                     📤 Upload Logo
                 </label>
                 <input type="file" id="input-logo" accept="image/*" style="display: none;">
-                <span class="file-name-text" id="file-name-label">default_icon.png</span>
+                <span class="file-name-text" id="file-name-label">default_star.png</span>
             </div>
         </div>
 
@@ -337,11 +424,11 @@
                 </div>
                 <div class="color-field">
                     <input type="color" id="color-company-font" value="#9e1c3f">
-                    <label for="color-company-font">Company Color</label>
+                    <label for="color-company-font">Company</label>
                 </div>
                 <div class="color-field">
                     <input type="color" id="color-font" value="#000000">
-                    <label for="color-font">Number Color</label>
+                    <label for="color-font">Numbers</label>
                 </div>
             </div>
         </div>
@@ -355,57 +442,40 @@
                 <span>🖨️</span>
                 <div style="display: flex; flex-direction: column;">
                     <span style="font-size: 0.95rem;">A4 Print Preview Canvas</span>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Your tickets are ready to shine!</span>
+                    <span style="font-size: 0.75rem; color: #64748b; font-weight: normal;">Your tickets are ready to shine!</span>
                 </div>
             </div>
             <button class="btn-download" id="btn-download">📥 Download High-Res PDF</button>
         </div>
         
         <div class="festive-canvas-bg">
+            <div class="feature-strip">
+                <div class="feature-card">🎨 Unlimited Themes</div>
+                <div class="feature-card">🏢 Custom Branding</div>
+                <div class="feature-card">📄 PDF Export</div>
+                <div class="feature-card">⚡ Instant Generation</div>
+            </div>
+
             <div class="decor-left">
-                <svg width="120" height="120" viewBox="0 0 100 100" style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#eab308" stroke-width="3"/>
-                    <circle cx="50" cy="50" r="40" fill="#f59e0b"/>
-                    <circle cx="50" cy="50" r="32" fill="#d97706"/>
-                    <text x="50" y="58" font-family="sans-serif" font-weight="900" font-size="24" fill="#ffffff" text-anchor="middle">77</text>
-                    <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <svg width="60" height="60" viewBox="0 0 50 50" style="transform: rotate(-20deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));">
-                    <circle cx="25" cy="25" r="22" fill="#ec4899"/>
-                    <circle cx="25" cy="25" r="17" fill="none" stroke="#fbcfe8" stroke-width="2" stroke-dasharray="4 2"/>
-                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">5</text>
-                </svg>
-                <svg width="45" height="45" viewBox="0 0 50 50" style="transform: rotate(15deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4)); margin-left: 60px;">
-                    <circle cx="25" cy="25" r="22" fill="#a855f7"/>
-                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">12</text>
-                </svg>
+                <div class="tambola-cage">🎱</div>
+                <div class="trophy">🏆</div>
+                <div class="jackpot">JACKPOT</div>
             </div>
 
             <div id="pdf-content">
                 </div>
 
             <div class="decor-right">
-                <svg width="100" height="70" viewBox="0 0 100 70" style="transform: rotate(12deg); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
-                    <rect width="100" height="60" rx="8" fill="#eab308" stroke="#ffffff" stroke-width="2"/>
-                    <circle cx="0" cy="30" r="8" fill="#241442"/>
-                    <circle cx="100" cy="30" r="8" fill="#241442"/>
-                    <text x="50" y="36" font-family="sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle" letter-spacing="1">LUCKY</text>
-                </svg>
-                <svg width="55" height="55" viewBox="0 0 50 50" style="transform: rotate(-10deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4)); margin-right: 40px;">
-                    <circle cx="25" cy="25" r="22" fill="#3b82f6"/>
-                    <circle cx="25" cy="25" r="16" fill="#ffffff"/>
-                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="15" fill="#1d4ed8" text-anchor="middle">45</text>
-                </svg>
-                <svg width="70" height="70" viewBox="0 0 50 50" style="transform: rotate(25deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));">
-                    <circle cx="25" cy="25" r="22" fill="#10b981"/>
-                    <text x="25" y="32" font-family="sans-serif" font-weight="900" font-size="18" fill="#ffffff" text-anchor="middle">90</text>
-                </svg>
+                <div class="tambola-ball ball-red">90</div>
+                <div class="tambola-ball ball-blue">45</div>
+                <div class="tambola-ball ball-green">7</div>
+                <div class="tambola-ball ball-gold">77</div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. LOCALIZED SECURE RANDOM PATTERN GENERATOR ENGINE ---
+        // --- LOCALIZED SECURE RANDOM PATTERN GENERATOR ENGINE ---
         let m_w, m_z;
         const BIT_MASK = 0xffffffff;
 
@@ -433,7 +503,7 @@
             }
         }
 
-        // --- 2. THE MATHEMATICAL TICKETING CORE ---
+        // --- THE MATHEMATICAL TICKETING CORE ---
         function generateStrictSetOf6() {
             while (true) {
                 let pools = [
@@ -519,7 +589,7 @@
             return [...generateStrictSetOf6(), ...generateStrictSetOf6()];
         }
 
-        // --- 3. UI AND RENDERING INTERFACE ---
+        // --- UI INTERFACE CORE ---
         let base64Logo = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ec4899'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.133 9.21l8.2-1.192z'/></svg>";
 
         const animals = ["Panda", "Eagle", "Leopard", "Falcon", "Tiger", "Stallion", "Panther", "Rhino"];
