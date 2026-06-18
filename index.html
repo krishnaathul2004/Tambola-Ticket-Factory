@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambola Factory - Custom Ticket Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #7c3aed, #db2777);
+            --button-gradient: linear-gradient(90deg, #9333ea, #ec4899);
+            --panel-bg: #ffffff;
+            --border-color: #f1f5f9;
+            --text-main: #1e1b4b;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background-color: #110c26; 
+            color: var(--text-main); 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Left Control Panel */
+        .control-panel { 
+            width: 380px; 
+            background: var(--panel-bg); 
+            border-right: 1px solid #e2e8f0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            overflow-y: auto; 
+            flex-shrink: 0;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+
+        /* Brand Banner Header */
+        .brand-banner {
+            background: #fff0f6;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            border: 1px dashed #f472b6;
+            position: relative;
+        }
+        .brand-banner h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-banner p { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
+        label { font-size: 0.85rem; font-weight: 700; color: #374151; }
+        
+        .helper-text { 
+            font-size: 0.78rem; 
+            color: #4b5563; 
+            line-height: 1.4; 
+            background: #f3f4f6; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            border-left: 4px solid #8b5cf6; 
+        }
+
+        input[type="text"], input[type="number"] { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid #d1d5db; 
+            border-radius: 8px; 
+            font-size: 0.95rem; 
+            color: #1f2937;
+            background-color: #f9fafb;
+            transition: all 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #a78bfa;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+        }
+
+        /* Styled Custom File Upload Button */
+        .file-upload-wrapper { display: flex; align-items: center; gap: 10px; }
+        .custom-file-btn {
+            background: #4338ca;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .custom-file-btn:hover { background: #3730a3; }
+        .file-name-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Color Picker Grids */
+        .color-pickers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .color-field { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            border: 1px solid #e5e7eb; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            background: #f9fafb; 
+        }
+        .color-field label { font-size: 0.8rem; font-weight: 500; color: #4b5563; cursor: pointer; }
+        .color-field input[type="color"] { border: none; width: 24px; height: 24px; cursor: pointer; background: none; border-radius: 4px; }
+        
+        .btn-action { 
+            background: var(--button-gradient); 
+            color: white; 
+            padding: 14px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+            transition: all 0.2s; 
+            margin-top: 5px; 
+        }
+        .btn-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4); }
+        .btn-action:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+
+        /* Right Preview Section Frame */
+        .preview-screen { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        
+        /* Modern Festive Background Theme Wrapper */
+        .festive-canvas-bg {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #241442;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(147, 51, 234, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #160a29 0%, #290f4e 100%);
+            position: relative;
+        }
+
+        /* Ambient Assets Decorative Elements */
+        .decor-left {
+            position: absolute;
+            left: 20px;
+            top: 25%;
+            width: 200px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 0.85;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+        .decor-right {
+            position: absolute;
+            right: 20px;
+            top: 22%;
+            width: 200px;
+            height: 400px;
+            pointer-events: none;
+            opacity: 0.85;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .preview-header { 
+            background: #fff; 
+            padding: 12px 24px; 
+            border-bottom: 1px solid #e2e8f0; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-shrink: 0;
+            z-index: 20;
+        }
+        .preview-header-left { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #1e1b4b; }
+        
+        .btn-download {
+            background: var(--button-gradient);
+            color: white; border: none; padding: 10px 20px; border-radius: 8px;
+            font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.25);
+        }
+
+        /* FIXED: Optimizing dimensions to stop vertical overflow onto blank sheets */
+        #pdf-content { width: 210mm; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-radius: 4px; z-index: 10; position: relative; }
+        .page { 
+            width: 210mm; 
+            height: 296mm; /* Shaved 1mm off to create a hard physical pixel bounding safety gap */
+            padding: 4mm 6mm; /* Tightened container padding slightly */
+            position: relative; 
+            overflow: hidden; /* Lock the boundaries tightly */
+            page-break-after: always; 
+            box-sizing: border-box; 
+        }
+        .page:last-child { page-break-after: avoid; }
+        
+        .vertical-split-line { 
+            position: absolute; 
+            top: 0; bottom: 0; left: 50%; 
+            width: 0; 
+            border-left: 2px dotted #f43f5e; 
+            z-index: 10; 
+            pointer-events: none; 
+            opacity: 0.7;
+        }
+        
+        /* FIXED: Reduced layout cell gaps to perfectly prevent sheet pagination leakages */
+        .tickets-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: repeat(6, 1fr); 
+            grid-auto-flow: column; 
+            gap: 6px 20px; /* Tightened grid item gaps slightly */
+            height: 100%; 
+            width: 100%; 
+        }
+        
+        /* High-Fidelity Ticket Layout */
+        .ticket-box { border-radius: 8px; padding: 5px; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; }
+        .ticket-header { display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt; font-weight: bold; margin-bottom: 4px; padding: 0 4px; }
+        .brand-container { display: flex; align-items: center; gap: 5px; max-width: 75%; overflow: hidden; }
+        .company-logo { height: 16px; width: auto; object-fit: contain; max-width: 30px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1)); }
+        .brand-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.3px; }
+        .ticket-id { font-size: 8pt; font-family: monospace; opacity: 0.9; letter-spacing: 0.5px; }
+        
+        .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #ffffff; border-radius: 4px; overflow: hidden; }
+        .tambola-table td { 
+            height: 33px; /* Trimmed row height from 34px to 33px for robust A4 containment */
+            text-align: center; 
+            font-size: 14pt; 
+            font-weight: 800; 
+            width: 11.11%; 
+            vertical-align: middle; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <div class="brand-banner">
+            <h1>Tambola Factory</h1>
+            <p>Design & Print Custom Tickets</p>
+        </div>
+
+        <div class="form-group">
+            <label>Company / Club Name</label>
+            <input type="text" id="input-company" value="NOI (KOCHI)">
+        </div>
+
+        <div class="form-group">
+            <label>Company Logo</label>
+            <div class="file-upload-wrapper">
+                <label for="input-logo" class="custom-file-btn">
+                    📤 Upload Logo
+                </label>
+                <input type="file" id="input-logo" accept="image/*" style="display: none;">
+                <span class="file-name-text" id="file-name-label">default_icon.png</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Number of Pages (12 tickets/page)</label>
+            <input type="number" id="input-pages" value="1" min="1" max="100">
+        </div>
+
+        <div class="form-group">
+            <label>Game Set Identifier (Lock Numbers)</label>
+            <div class="helper-text">
+                Want the <strong>exact same numbers</strong> in a different color theme? Keep this name identical.
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="input-seed-string" value="Sunday Premium Match">
+                <button id="btn-random-phrase" style="padding: 0 14px; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;" title="Roll a new random game identifier">🎲 New</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Theme & Layout Colors</label>
+            <div class="color-pickers">
+                <div class="color-field">
+                    <input type="color" id="color-page-bg" value="#ffffff">
+                    <label for="color-page-bg">Page BG</label>
+                </div>
+                <div class="color-field">
+                    <input type="color" id="color-bg" value="#fff5f5">
+                    <label for="color-bg">Card BG</label>
+                </div>
+                <div class="color-field">
+                    <input type="color" id="color-border" value="#f43f5e">
+                    <label for="color-border">Border</label>
+                </div>
+                <div class="color-field">
+                    <input type="color" id="color-grid" value="#f43f5e">
+                    <label for="color-grid">Grid Line</label>
+                </div>
+                <div class="color-field">
+                    <input type="color" id="color-company-font" value="#9e1c3f">
+                    <label for="color-company-font">Company Color</label>
+                </div>
+                <div class="color-field">
+                    <input type="color" id="color-font" value="#000000">
+                    <label for="color-font">Number Color</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-action" id="btn-refresh">Update Live Preview 🪄</button>
+    </div>
+
+    <div class="preview-screen">
+        <div class="preview-header">
+            <div class="preview-header-left">
+                <span>🖨️</span>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.95rem;">A4 Print Preview Canvas</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Your tickets are ready to shine!</span>
+                </div>
+            </div>
+            <button class="btn-download" id="btn-download">📥 Download High-Res PDF</button>
+        </div>
+        
+        <div class="festive-canvas-bg">
+            <div class="decor-left">
+                <svg width="120" height="120" viewBox="0 0 100 100" style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#eab308" stroke-width="3"/>
+                    <circle cx="50" cy="50" r="40" fill="#f59e0b"/>
+                    <circle cx="50" cy="50" r="32" fill="#d97706"/>
+                    <text x="50" y="58" font-family="sans-serif" font-weight="900" font-size="24" fill="#ffffff" text-anchor="middle">77</text>
+                    <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg width="60" height="60" viewBox="0 0 50 50" style="transform: rotate(-20deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));">
+                    <circle cx="25" cy="25" r="22" fill="#ec4899"/>
+                    <circle cx="25" cy="25" r="17" fill="none" stroke="#fbcfe8" stroke-width="2" stroke-dasharray="4 2"/>
+                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">5</text>
+                </svg>
+                <svg width="45" height="45" viewBox="0 0 50 50" style="transform: rotate(15deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4)); margin-left: 60px;">
+                    <circle cx="25" cy="25" r="22" fill="#a855f7"/>
+                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">12</text>
+                </svg>
+            </div>
+
+            <div id="pdf-content">
+                </div>
+
+            <div class="decor-right">
+                <svg width="100" height="70" viewBox="0 0 100 70" style="transform: rotate(12deg); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
+                    <rect width="100" height="60" rx="8" fill="#eab308" stroke="#ffffff" stroke-width="2"/>
+                    <circle cx="0" cy="30" r="8" fill="#241442"/>
+                    <circle cx="100" cy="30" r="8" fill="#241442"/>
+                    <text x="50" y="36" font-family="sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle" letter-spacing="1">LUCKY</text>
+                </svg>
+                <svg width="55" height="55" viewBox="0 0 50 50" style="transform: rotate(-10deg); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4)); margin-right: 40px;">
+                    <circle cx="25" cy="25" r="22" fill="#3b82f6"/>
+                    <circle cx="25" cy="25" r="16" fill="#ffffff"/>
+                    <text x="25" y="31" font-family="sans-serif" font-weight="900" font-size="15" fill="#1d4ed8" text-anchor="middle">45</text>
+                </svg>
+                <svg width="70" height="70" viewBox="0 0 50 50" style="transform: rotate(25deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));">
+                    <circle cx="25" cy="25" r="22" fill="#10b981"/>
+                    <text x="25" y="32" font-family="sans-serif" font-weight="900" font-size="18" fill="#ffffff" text-anchor="middle">90</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. LOCALIZED SECURE RANDOM PATTERN GENERATOR ENGINE ---
+        let m_w, m_z;
+        const BIT_MASK = 0xffffffff;
+
+        function seedFromString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            m_w = (123456789 + hash) & BIT_MASK;
+            m_z = (987654321 - hash) & BIT_MASK;
+        }
+
+        function getNextRandom() {
+            m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & BIT_MASK;
+            m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & BIT_MASK;
+            let result = ((m_z << 16) + m_w) & BIT_MASK;
+            result /= 4294967296;
+            return result + 0.5;
+        }
+
+        function seededShuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(getNextRandom() * (i + 1));
+                let temp = array[i]; array[i] = array[j]; array[j] = temp;
+            }
+        }
+
+        // --- 2. THE MATHEMATICAL TICKETING CORE ---
+        function generateStrictSetOf6() {
+            while (true) {
+                let pools = [
+                    Array.from({length: 9}, (_, i) => i + 1),   
+                    Array.from({length: 10}, (_, i) => i + 10), 
+                    Array.from({length: 10}, (_, i) => i + 20), 
+                    Array.from({length: 10}, (_, i) => i + 30), 
+                    Array.from({length: 10}, (_, i) => i + 40), 
+                    Array.from({length: 10}, (_, i) => i + 50), 
+                    Array.from({length: 10}, (_, i) => i + 60), 
+                    Array.from({length: 10}, (_, i) => i + 70), 
+                    Array.from({length: 11}, (_, i) => i + 80)  
+                ];
+                pools.forEach(p => seededShuffle(p));
+
+                let colCounts = [9, 10, 10, 10, 10, 10, 10, 10, 11];
+                let tickets = Array.from({length: 6}, () => Array.from({length: 3}, () => Array(9).fill(0)));
+                let ticketColAllocations = Array.from({length: 6}, () => Array(9).fill(1));
+                let colRem = colCounts.map(c => c - 6);
+
+                let success = true;
+                for (let tIdx = 0; tIdx < 6; tIdx++) {
+                    let allocated = 9; let attempts = 0;
+                    while (allocated < 15 && attempts < 100) {
+                        attempts++;
+                        let c = Math.floor(getNextRandom() * 9);
+                        if (ticketColAllocations[tIdx][c] < 3 && colRem[c] > 0) {
+                            ticketColAllocations[tIdx][c]++; colRem[c]--; allocated++;
+                        }
+                    }
+                    if (allocated < 15) { success = false; break; }
+                }
+
+                if (!success || colRem.some(c => c !== 0)) continue;
+
+                for (let tIdx = 0; tIdx < 6; tIdx++) {
+                    let rowCounts = [0, 0, 0];
+                    for (let cIdx = 0; cIdx < 9; cIdx++) {
+                        let count = ticketColAllocations[tIdx][cIdx];
+                        let rows = [0, 1, 2]; seededShuffle(rows);
+                        let assigned = 0;
+                        for (let r of rows) {
+                            if (assigned < count && rowCounts[r] < 5) {
+                                tickets[tIdx][r][cIdx] = -1; rowCounts[r]++; assigned++;
+                            }
+                        }
+                    }
+                    if (rowCounts.some(rc => rc !== 5)) { success = false; break; }
+                }
+
+                if (!success) continue;
+
+                for (let cIdx = 0; cIdx < 9; cIdx++) {
+                    for (let tIdx = 0; tIdx < 6; tIdx++) {
+                        for (let rIdx = 0; rIdx < 3; rIdx++) {
+                            if (tickets[tIdx][rIdx][cIdx] === -1) {
+                                tickets[tIdx][rIdx][cIdx] = pools[cIdx].shift();
+                            }
+                        }
+                    }
+                }
+
+                for (let tIdx = 0; tIdx < 6; tIdx++) {
+                    for (let colIdx = 0; colIdx < 9; colIdx++) {
+                        let vals = [];
+                        for (let r = 0; r < 3; r++) {
+                            if (tickets[tIdx][r][colIdx] > 0) vals.push(tickets[tIdx][r][colIdx]);
+                        }
+                        vals.sort((a, b) => a - b);
+                        let valIdx = 0;
+                        for (let r = 0; r < 3; r++) {
+                            if (tickets[tIdx][r][colIdx] > 0) {
+                                tickets[tIdx][r][colIdx] = vals[valIdx++];
+                            }
+                        }
+                    }
+                }
+                return tickets;
+            }
+        }
+
+        function generatePageTickets() {
+            return [...generateStrictSetOf6(), ...generateStrictSetOf6()];
+        }
+
+        // --- 3. UI AND RENDERING INTERFACE ---
+        let base64Logo = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ec4899'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.133 9.21l8.2-1.192z'/></svg>";
+
+        const animals = ["Panda", "Eagle", "Leopard", "Falcon", "Tiger", "Stallion", "Panther", "Rhino"];
+        const colors = ["Golden", "Silver", "Crimson", "Emerald", "Sapphire", "Midnight", "Royal", "Amber"];
+
+        document.getElementById('btn-random-phrase').addEventListener('click', function() {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+            const randomNum = Math.floor(Math.random() * 90) + 1;
+            document.getElementById('input-seed-string').value = `${randomColor} ${randomAnimal} Match ${randomNum}`;
+            startGeneration();
+        });
+
+        document.getElementById('input-logo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('file-name-label').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    base64Logo = event.target.result;
+                    startGeneration();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function startGeneration() {
+            const btnRefresh = document.getElementById('btn-refresh');
+            const btnDownload = document.getElementById('btn-download');
+            const canvas = document.getElementById('pdf-content');
+            
+            const companyName = document.getElementById('input-company').value;
+            const pageCount = parseInt(document.getElementById('input-pages').value) || 1;
+            const seedText = document.getElementById('input-seed-string').value || "Default Game";
+            
+            const pageBgC = document.getElementById('color-page-bg').value;
+            const bgC = document.getElementById('color-bg').value;
+            const borderC = document.getElementById('color-border').value;
+            const gridC = document.getElementById('color-grid').value;
+            const compFontC = document.getElementById('color-company-font').value;
+            const fontC = document.getElementById('color-font').value;
+
+            seedFromString(seedText);
+
+            btnRefresh.disabled = true;
+            btnDownload.disabled = true;
+            canvas.innerHTML = ''; 
+
+            let ticketCounter = 1;
+            let currentPage = 0;
+
+            function generateNextPage() {
+                if (currentPage >= pageCount) {
+                    btnRefresh.disabled = false;
+                    btnDownload.disabled = false;
+                    btnRefresh.innerText = "Update Live Preview 🪄";
+                    return;
+                }
+
+                btnRefresh.innerText = `Generating (${currentPage + 1}/${pageCount})...`;
+
+                const pageData = generatePageTickets();
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'page';
+                pageDiv.style.backgroundColor = pageBgC; 
+                
+                const line = document.createElement('div');
+                line.className = 'vertical-split-line';
+                pageDiv.appendChild(line);
+
+                const grid = document.createElement('div');
+                grid.className = 'tickets-grid';
+
+                pageData.forEach(ticket => {
+                    let ticketCode = `A${String(ticketCounter).padStart(4, '0')}`;
+                    ticketCounter++;
+
+                    let ticketHTML = `
+                        <div class="ticket-box" style="border: 2px solid ${borderC}; background-color: ${bgC};">
+                            <div class="ticket-header">
+                                <div class="brand-container" style="color: ${compFontC};">
+                                    <img src="${base64Logo}" class="company-logo" alt="Logo">
+                                    <span class="brand-text">${companyName}</span>
+                                </div>
+                                <div class="ticket-id" style="color: ${compFontC};">${ticketCode}</div>
+                            </div>
+                            <table class="tambola-table">
+                    `;
+
+                    for (let r = 0; r < 3; r++) {
+                        ticketHTML += '<tr>';
+                        for (let c = 0; c < 9; c++) {
+                            let val = ticket[r][c];
+                            let cellStyle = `border: 1px solid ${gridC}; color: ${fontC}; font-family: sans-serif; font-weight:800;`;
+                            if (val === 0) {
+                                ticketHTML += `<td style="${cellStyle} background-color: #ffffff;">&nbsp;</td>`;
+                            } else {
+                                ticketHTML += `<td style="${cellStyle} background-color: #ffffff;">${val}</td>`;
+                            }
+                        }
+                        ticketHTML += '</tr>';
+                    }
+
+                    ticketHTML += '</table></div>';
+                    grid.innerHTML += ticketHTML;
+                });
+
+                pageDiv.appendChild(grid);
+                canvas.appendChild(pageDiv);
+
+                currentPage++;
+                setTimeout(generateNextPage, 1);
+            }
+
+            setTimeout(generateNextPage, 1);
+        }
+
+        document.getElementById('btn-refresh').addEventListener('click', startGeneration);
+        
+        document.getElementById('btn-download').addEventListener('click', function() {
+            const element = document.getElementById('pdf-content');
+            const btn = this;
+            btn.disabled = true;
+            btn.innerText = "Compiling PDF...";
+
+            const opt = {
+                margin:       0,
+                filename:     'Tambola_Factory_Tickets.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.disabled = false;
+                btn.innerText = "📥 Download High-Res PDF";
+            });
+        });
+
+        window.onload = function() {
+            startGeneration();
+        };
+    </script>
+</body>
+</html>
