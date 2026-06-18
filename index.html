@@ -208,6 +208,7 @@
         .btn-download {
             background: var(--button-gradient); color: white; border: none; padding: 10px 20px; border-radius: 8px;
             font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
         }
 
         /* Printable Paper Layout Box Frame */
@@ -229,18 +230,9 @@
         .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #ffffff; border-radius: 4px; overflow: hidden; }
         .tambola-table td { height: 33px; text-align: center; font-size: 14pt; font-weight: 800; width: 11.11%; vertical-align: middle; }
 
-        /* THE LIVE CENTERING SUB-CONTAINER LABEL RULE */
         .ticket-footer-label {
-            text-align: center;
-            font-size: 7.5pt;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-top: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 0 8px;
+            text-align: center; font-size: 7.5pt; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 0.6px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 8px;
         }
 
         /* Page Watermark Layout CSS */
@@ -284,14 +276,14 @@
 
     <div class="premium-modal" id="paywall-modal">
         <div class="modal-card">
-            <h3>👑 Unlock Premium Access</h3>
-            <p>You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!</p>
-            <div class="pricing-badge">Single Match Pass: ₹199 Only</div>
+            <h3 id="paywall-title">👑 Unlock Premium Access</h3>
+            <p id="paywall-desc">You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!</p>
+            <div class="pricing-badge">24-Hour Match Pass: ₹199 Only</div>
             
             <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 8px;">
                 1. Pay via UPI to: <span style="color:#7c3aed; font-weight:800;">yourupi@okaxis</span><br>
                 2. Note down your current Game Identifier exactly.<br>
-                3. Share screenshot to WhatsApp to receive your unique unlock key!
+                3. Share screenshot to WhatsApp to receive your unique 24-Hour unlock key!
             </p>
             
             <input type="text" class="modal-input" id="premium-key-input" placeholder="Enter Your Unique Match Key">
@@ -400,7 +392,7 @@
     </div>
 
     <script>
-        // --- 1. LOCALIZED SECURE RANDOM PATTERN GENERATOR ENGINE ---
+        // --- 1. LOCALIZED SEC RANDOM GENERATOR ENGINE ---
         let m_w, m_z; const BIT_MASK = 0xffffffff;
         function seedFromString(str) {
             let hash = 0; for (let i = 0; i < str.length; i++) { hash = str.charCodeAt(i) + ((hash << 5) - hash); }
@@ -414,33 +406,58 @@
             for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(getNextRandom() * (i + 1)); let temp = array[i]; array[i] = array[j]; array[j] = temp; }
         }
 
-        // --- 2. CRYPTOGRAPHIC LICENSE GENERATOR SYSTEM ---
+        // --- 2. CRYPTOGRAPHIC TIME & DOWNLOAD COUNT ENGINE ---
         const SECRET_SALT = 8451; 
         
-        function generateValidMatchKey(company, gameSeed) {
-            let combinedString = (company + gameSeed).toUpperCase().replace(/\s+/g, '');
-            let hash = 0;
-            for (let i = 0; i < combinedString.length; i++) {
-                hash = combinedString.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            return "TMB-" + Math.abs((hash ^ SECRET_SALT) % 1000000);
+        function parseTimestampFromKey(key) {
+            try { let parts = key.split('-'); if (parts.length !== 3) return null; return (parseInt(parts[2]) - 1420) * 3600000; } catch(e) { return null; }
+        }
+
+        function verifyMatchKeyStructure(company, gameSeed, keyEntered) {
+            try {
+                let parts = keyEntered.split('-'); if (parts.length !== 3 || parts[0] !== "TMB") return false;
+                let encodedHours = parseInt(parts[2]) - 1420;
+                let combinedString = (company + gameSeed).toUpperCase().replace(/\s+/g, '') + encodedHours;
+                let hash = 0; for (let i = 0; i < combinedString.length; i++) { hash = combinedString.charCodeAt(i) + ((hash << 5) - hash); }
+                return parseInt(parts[1]) === Math.abs((hash ^ SECRET_SALT) % 100000);
+            } catch(e) { return false; }
         }
 
         function checkPremiumStatus() {
             const companyName = document.getElementById('input-company').value;
             const seedText = document.getElementById('input-seed-string').value;
-            const savedKey = localStorage.getItem("tmb_key_" + (companyName + seedText).replace(/\s+/g, ''));
+            const idNormalized = (companyName + seedText).replace(/\s+/g, '');
             
-            const standardCorrectKey = generateValidMatchKey(companyName, seedText);
-            if (savedKey === standardCorrectKey) {
-                document.getElementById('status-badge').innerText = "👑 Premium Active for this Game!";
-                document.getElementById('status-badge').style.color = "#ec4899";
-                return true;
-            } else {
-                document.getElementById('status-badge').innerText = "⭐ Free Version (Max 10 Pages)";
-                document.getElementById('status-badge').style.color = "#f472b6";
-                return false;
+            const savedKey = localStorage.getItem("tmb_pass_" + idNormalized);
+            if (!savedKey) { setFreeStatus(); return false; }
+
+            if (!verifyMatchKeyStructure(companyName, seedText, savedKey)) { localStorage.removeItem("tmb_pass_" + idNormalized); setFreeStatus(); return false; }
+
+            // 24 Hours Validation Check
+            let keyCreationTime = parseTimestampFromKey(savedKey);
+            if (!keyCreationTime || (Date.now() - keyCreationTime) > 86400000) { 
+                localStorage.removeItem("tmb_pass_" + idNormalized); 
+                alert("⏳ Your 24-Hour Premium Match Pass has expired!");
+                setFreeStatus(); return false; 
             }
+
+            // --- FIXED: CHECK DOWNLOAD EXHAUSTION PASS LIMIT ---
+            let currentDownloadCount = parseInt(localStorage.getItem("tmb_dl_count_" + idNormalized)) || 0;
+            if (currentDownloadCount >= 6) {
+                document.getElementById('status-badge').innerText = "❌ Pass Exhausted (6/6 Downloads Used)";
+                document.getElementById('status-badge').style.color = "#dc2626";
+                return "EXHAUSTED";
+            }
+
+            let hoursLeft = Math.max(0, Math.ceil((86400000 - (Date.now() - keyCreationTime)) / 3600000));
+            document.getElementById('status-badge').innerText = `👑 Premium Active (${hoursLeft}h left) • [${currentDownloadCount}/6 PDFs Downloaded]`;
+            document.getElementById('status-badge').style.color = "#ec4899";
+            return true;
+        }
+
+        function setFreeStatus() {
+            document.getElementById('status-badge').innerText = "⭐ Free Version (Max 10 Pages)";
+            document.getElementById('status-badge').style.color = "#f472b6";
         }
 
         // --- 3. MATHEMATICAL TICKETING CORE ---
@@ -510,9 +527,19 @@
             
             const isPremium = checkPremiumStatus();
 
+            // Trigger structural paywall lock if layout state matches an exhausted block
+            if (isPremium === "EXHAUSTED") {
+                document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
+                document.getElementById('paywall-desc').innerText = "This premium match pass has safely reached its max download cap of 6 high-res PDF exports. Please generate a fresh game set or key for your next round!";
+                document.getElementById('paywall-modal').classList.add('active');
+                return;
+            }
+
+            // Normal free tier limits
             if (!isPremium && pageCount > 10) {
-                document.getElementById('input-pages').value = 10;
-                pageCount = 10;
+                document.getElementById('input-pages').value = 10; pageCount = 10;
+                document.getElementById('paywall-title').innerText = "👑 Unlock Premium Access";
+                document.getElementById('paywall-desc').innerText = "You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!";
                 document.getElementById('paywall-modal').classList.add('active');
             }
 
@@ -525,16 +552,14 @@
 
             seedFromString(seedText);
             btnRefresh.disabled = true; btnDownload.disabled = true; canvas.innerHTML = ''; 
-
             let ticketCounter = 1; let currentPage = 0;
 
             function generateNextPage() {
-                if (currentPage >= pageCount) { btnRefresh.disabled = false; btnDownload.disabled = false; btnRefresh.innerText = "Update Live Preview 🪄"; return; }
+                if (currentPage >= pageCount) { btnRefresh.disabled = false; btnDownload.disabled = false; btnRefresh.innerText = "Update Live Preview 🪄"; checkPremiumStatus(); return; }
                 btnRefresh.innerText = `Generating (${currentPage + 1}/${pageCount})...`;
 
                 const pageData = generatePageTickets();
                 const pageDiv = document.createElement('div'); pageDiv.className = 'page'; pageDiv.style.backgroundColor = pageBgC; 
-                
                 const line = document.createElement('div'); line.className = 'vertical-split-line'; pageDiv.appendChild(line);
                 const grid = document.createElement('div'); grid.className = 'tickets-grid';
 
@@ -549,18 +574,14 @@
                         }
                         ticketHTML += '</tr>';
                     }
-                    // FIXED: Re-mapped text parameters inside active loop strings so it outputs correctly
-                    ticketHTML += `</table><div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div>`; 
-                    grid.innerHTML += ticketHTML;
+                    ticketHTML += `</table><div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div>`; grid.innerHTML += ticketHTML;
                 });
 
                 pageDiv.appendChild(grid);
 
-                if (!isPremium) {
-                    const watermark = document.createElement('div');
-                    watermark.className = 'page-watermark';
-                    watermark.innerText = "Generated By: Tambola Ticket Factory";
-                    pageDiv.appendChild(watermark);
+                if (isPremium !== true) {
+                    const watermark = document.createElement('div'); watermark.className = 'page-watermark';
+                    watermark.innerText = "Generated By: Tambola Ticket Factory"; pageDiv.appendChild(watermark);
                 }
 
                 canvas.appendChild(pageDiv);
@@ -576,28 +597,51 @@
             const companyName = document.getElementById('input-company').value;
             const seedText = document.getElementById('input-seed-string').value;
             const keyEntered = document.getElementById('premium-key-input').value.trim();
+            const idNormalized = (companyName + seedText).replace(/\s+/g, '');
             
-            const standardCorrectKey = generateValidMatchKey(companyName, seedText);
-            
-            if (keyEntered === standardCorrectKey) {
-                localStorage.setItem("tmb_key_" + (companyName + seedText).replace(/\s+/g, ''), keyEntered);
+            if (verifyMatchKeyStructure(companyName, seedText, keyEntered)) {
+                localStorage.setItem("tmb_pass_" + idNormalized, keyEntered);
+                localStorage.setItem("tmb_dl_count_" + idNormalized, 0); // Initialize download counters
                 document.getElementById('paywall-modal').classList.remove('active');
-                alert("Success! Premium match configuration unlocked successfully.");
+                alert("Success! Your 24-Hour Premium pass has been activated successfully.");
                 startGeneration();
             } else {
-                alert("Invalid Access Code for this specific Club + Match Name combination.");
+                alert("Invalid or Expired Pass Key for this specific Club + Match name combination.");
             }
         });
 
-        // Form change observers resets UI context tags dynamically
         document.getElementById('input-company').addEventListener('input', checkPremiumStatus);
         document.getElementById('input-seed-string').addEventListener('input', checkPremiumStatus);
 
         document.getElementById('btn-refresh').addEventListener('click', startGeneration);
+        
+        // --- DOWNLOAD ACTION EVENT: INCREMENTS ONLY WHEN EXPORT IS ACTIVATED ---
         document.getElementById('btn-download').addEventListener('click', function() {
+            const companyName = document.getElementById('input-company').value;
+            const seedText = document.getElementById('input-seed-string').value;
+            const idNormalized = (companyName + seedText).replace(/\s+/g, '');
+            
+            const isPremium = checkPremiumStatus();
+            
+            if (isPremium === "EXHAUSTED") {
+                document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
+                document.getElementById('paywall-desc').innerText = "This premium match pass has safely reached its max download cap of 6 high-res PDF exports. Please generate a fresh game set or key for your next round!";
+                document.getElementById('paywall-modal').classList.add('active');
+                return;
+            }
+
             const element = document.getElementById('pdf-content'); const btn = this; btn.disabled = true; btn.innerText = "Compiling PDF...";
             const opt = { margin: 0, filename: 'Tambola_Factory_Tickets.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
-            html2pdf().set(opt).from(element).save().then(() => { btn.disabled = false; btn.innerText = "📥 Download High-Res PDF"; });
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Log and process secure micro-transaction counting
+                if (isPremium === true) {
+                    let currentDownloads = parseInt(localStorage.getItem("tmb_dl_count_" + idNormalized)) || 0;
+                    localStorage.setItem("tmb_dl_count_" + idNormalized, currentDownloads + 1);
+                }
+                btn.disabled = false; btn.innerText = "📥 Download High-Res PDF";
+                checkPremiumStatus(); // Instantly refreshes status badge counters
+            });
         });
 
         window.onload = function() { startGeneration(); };
