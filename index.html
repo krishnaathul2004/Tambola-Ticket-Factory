@@ -21,11 +21,12 @@
             background-color: #110c26; 
             color: var(--text-main); 
             display: flex; 
+            flex-direction: row;
             height: 100vh; 
             overflow: hidden; 
         }
 
-        /* Left Control Panel */
+        /* Desktop Left Control Panel */
         .control-panel { 
             width: 380px; 
             background: var(--panel-bg); 
@@ -40,7 +41,6 @@
             z-index: 20;
         }
 
-        /* Brand Banner Header */
         .brand-banner {
             background: #fff0f6;
             border-radius: 12px;
@@ -81,14 +81,7 @@
             background-color: #f9fafb;
             transition: all 0.2s;
         }
-        input[type="text"]:focus, input[type="number"]:focus {
-            outline: none;
-            border-color: #a78bfa;
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
-        }
 
-        /* Styled Custom File Upload Button */
         .file-upload-wrapper { display: flex; align-items: center; gap: 10px; }
         .custom-file-btn {
             background: #4338ca;
@@ -101,12 +94,9 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: background 0.2s;
         }
-        .custom-file-btn:hover { background: #3730a3; }
         .file-name-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Color Picker Grids */
         .color-pickers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .color-field { 
             display: flex; 
@@ -130,16 +120,12 @@
             font-weight: 700; 
             cursor: pointer; 
             box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
-            transition: all 0.2s; 
             margin-top: 5px; 
         }
-        .btn-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4); }
-        .btn-action:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
 
         /* Right Preview Section Frame */
         .preview-screen { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         
-        /* Modern Festive Background Theme Wrapper */
         .festive-canvas-bg {
             flex: 1;
             overflow-y: auto;
@@ -155,12 +141,10 @@
             position: relative;
         }
 
-        /* Ambient Assets Decorative Elements */
-        .decor-left {
+        /* Decorative Elements */
+        .decor-left, .decor-right {
             position: absolute;
-            left: 20px;
-            top: 25%;
-            width: 200px;
+            width: 140px;
             height: 400px;
             pointer-events: none;
             opacity: 0.85;
@@ -168,20 +152,10 @@
             flex-direction: column;
             gap: 40px;
             align-items: center;
+            z-index: 5;
         }
-        .decor-right {
-            position: absolute;
-            right: 20px;
-            top: 22%;
-            width: 200px;
-            height: 400px;
-            pointer-events: none;
-            opacity: 0.85;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            align-items: center;
-        }
+        .decor-left { left: 20px; top: 25%; }
+        .decor-right { right: 20px; top: 22%; }
 
         .preview-header { 
             background: #fff; 
@@ -199,17 +173,16 @@
             background: var(--button-gradient);
             color: white; border: none; padding: 10px 20px; border-radius: 8px;
             font-weight: 700; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.25);
         }
 
-        /* FIXED: Optimizing dimensions to stop vertical overflow onto blank sheets */
-        #pdf-content { width: 210mm; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-radius: 4px; z-index: 10; position: relative; }
+        /* Printable Paper Layout Box Frame */
+        #pdf-content { width: 210mm; background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-radius: 4px; z-index: 10; position: relative; transform-origin: top center; }
         .page { 
             width: 210mm; 
-            height: 296mm; /* Shaved 1mm off to create a hard physical pixel bounding safety gap */
-            padding: 4mm 6mm; /* Tightened container padding slightly */
+            height: 296mm; 
+            padding: 4mm 6mm; 
             position: relative; 
-            overflow: hidden; /* Lock the boundaries tightly */
+            overflow: hidden; 
             page-break-after: always; 
             box-sizing: border-box; 
         }
@@ -225,33 +198,81 @@
             opacity: 0.7;
         }
         
-        /* FIXED: Reduced layout cell gaps to perfectly prevent sheet pagination leakages */
         .tickets-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
             grid-template-rows: repeat(6, 1fr); 
             grid-auto-flow: column; 
-            gap: 6px 20px; /* Tightened grid item gaps slightly */
+            gap: 6px 20px; 
             height: 100%; 
             width: 100%; 
         }
         
-        /* High-Fidelity Ticket Layout */
         .ticket-box { border-radius: 8px; padding: 5px; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; }
         .ticket-header { display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt; font-weight: bold; margin-bottom: 4px; padding: 0 4px; }
         .brand-container { display: flex; align-items: center; gap: 5px; max-width: 75%; overflow: hidden; }
-        .company-logo { height: 16px; width: auto; object-fit: contain; max-width: 30px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1)); }
+        .company-logo { height: 16px; width: auto; object-fit: contain; max-width: 30px; }
         .brand-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.3px; }
         .ticket-id { font-size: 8pt; font-family: monospace; opacity: 0.9; letter-spacing: 0.5px; }
         
         .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #ffffff; border-radius: 4px; overflow: hidden; }
         .tambola-table td { 
-            height: 33px; /* Trimmed row height from 34px to 33px for robust A4 containment */
+            height: 33px; 
             text-align: center; 
             font-size: 14pt; 
             font-weight: 800; 
             width: 11.11%; 
             vertical-align: middle; 
+        }
+
+        /* --- SMART RESPONSIVE MOBILE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow-y: auto;
+                height: auto;
+            }
+            .control-panel {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                overflow-y: visible;
+                padding: 16px;
+            }
+            .preview-screen {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+            .preview-header {
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                padding: 10px 16px;
+            }
+            .festive-canvas-bg {
+                padding: 10px;
+                overflow-x: hidden;
+                overflow-y: visible;
+                min-height: 400px;
+            }
+            /* Hide large background vector illustrations on tiny screens to save room */
+            .decor-left, .decor-right {
+                display: none;
+            }
+            /* Scales down the giant A4 sheet view precisely so it fits on a phone screen */
+            #pdf-content {
+                transform: scale(0.42);
+                margin-bottom: -170mm; /* Pulls elements up to stop long empty gaps */
+            }
+        }
+
+        @media (max-width: 480px) {
+            #pdf-content {
+                transform: scale(0.33);
+                margin-bottom: -195mm;
+            }
         }
     </style>
 </head>
