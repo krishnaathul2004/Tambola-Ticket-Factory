@@ -34,7 +34,7 @@
             padding: 25px; 
             display: flex; 
             flex-direction: column; 
-            gap: 24px; 
+            gap: 24px; /* Increased gap between major items */
             overflow-y: auto; 
             flex-shrink: 0;
             box-shadow: 5px 0 25px rgba(0,0,0,0.3);
@@ -69,7 +69,7 @@
             display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.04);
         }
 
-        .form-group { display: flex; flex-direction: column; gap: 10px; position: relative; } 
+        .form-group { display: flex; flex-direction: column; gap: 10px; position: relative; } /* Increased internal padding spacing */
         label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; letter-spacing: 0.3px; }
         
         .helper-text { 
@@ -231,35 +231,15 @@
         .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; border-radius: 4px; overflow: hidden; }
         .tambola-table td { height: 33px; text-align: center; font-size: 14pt; font-weight: 800; width: 11.11%; vertical-align: middle; }
 
-        /* Footer flex configuration to hold event name and bottom-left watermark tag */
-        .ticket-footer-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 6.5pt;
-            font-weight: bold;
-            margin-top: 5px;
-            padding: 0 4px;
-            font-family: sans-serif;
-        }
         .ticket-footer-label {
-            flex: 1;
-            text-align: center;
-            font-size: 7.5pt;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 0 4px;
+            text-align: center; font-size: 7.5pt; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 0.6px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 8px;
         }
-        .ticket-watermark-label {
-            font-size: 5.5pt;
-            font-weight: bold;
-            opacity: 0.5;
-            white-space: nowrap;
-            text-transform: uppercase;
+
+        /* Page Watermark Layout CSS */
+        .page-watermark {
+            position: absolute; bottom: 5px; right: 15px; font-size: 8pt; font-weight: bold;
+            color: rgba(0,0,0,0.25); font-family: sans-serif; pointer-events: none;
         }
 
         /* --- MONETIZATION MODAL OVERLAY --- */
@@ -280,6 +260,7 @@
         
         .pricing-badge { background: #fff1f2; color: #db2777; font-size: 1.4rem; font-weight: 800; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 15px; border: 1px dashed #f43f5e; transition: all 0.2s; }
         
+        /* PROMO COUPON LAYOUTS */
         .coupon-section {
             display: flex; gap: 8px; margin-bottom: 15px; background: #f1f5f9; padding: 10px; border-radius: 8px; align-items: center;
         }
@@ -308,7 +289,7 @@
     <div class="premium-modal" id="paywall-modal">
         <div class="modal-card">
             <h3 id="paywall-title">👑 Unlock Premium Access</h3>
-            <p id="paywall-desc">You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove ticket watermarks!</p>
+            <p id="paywall-desc">You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!</p>
             
             <div class="pricing-badge" id="modal-price-tag">24-Hour Match Pass: ₹99 Only</div>
             
@@ -459,7 +440,6 @@
             } catch(e) { return false; }
         }
 
-        // Checks active validation tokens
         function checkPremiumStatus() {
             const companyName = document.getElementById('input-company').value;
             const seedText = document.getElementById('input-seed-string').value;
@@ -565,7 +545,7 @@
             if (!isPremium && pageCount > 10) {
                 document.getElementById('input-pages').value = 10; pageCount = 10;
                 document.getElementById('paywall-title').innerText = "👑 Unlock Premium Access";
-                document.getElementById('paywall-desc').innerText = "You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove ticket watermarks!";
+                document.getElementById('paywall-desc').innerText = "You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!";
                 document.getElementById('paywall-modal').classList.add('active');
             }
 
@@ -573,7 +553,7 @@
             const bgC = document.getElementById('color-bg').value;
             const borderC = document.getElementById('color-border').value;
             const gridC = document.getElementById('color-grid').value;
-            const cellBgC = document.getElementById('color-cell-bg').value; 
+            const cellBgC = document.getElementById('color-cell-bg').value; // Added Custom Cell BG Value
             const compFontC = document.getElementById('color-company-font').value;
             const fontC = document.getElementById('color-font').value;
 
@@ -601,16 +581,17 @@
                         }
                         ticketHTML += '</tr>';
                     }
-                    
-                    // --- UPDATED: INJECT WATERMARK DYNAMICALLY INTO TICKET BOTTOM ROW ---
-                    let watermarkHTML = (isPremium === true) ? '' : `<span class="ticket-watermark-label" style="color: ${compFontC};">FACTORY TICKET</span>`;
-                    
-                    ticketHTML += `</table><div class="ticket-footer-row">${watermarkHTML}<div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div></div>`; 
-                    grid.innerHTML += ticketHTML;
+                    ticketHTML += `</table><div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div>`; grid.innerHTML += ticketHTML;
                 });
 
                 grid.style.gridTemplateRows = "repeat(6, 1fr)";
                 pageDiv.appendChild(grid);
+
+                if (isPremium !== true) {
+                    const watermark = document.createElement('div'); watermark.className = 'page-watermark';
+                    watermark.innerText = "Generated By: Tambola Ticket Factory"; pageDiv.appendChild(watermark);
+                }
+
                 canvas.appendChild(pageDiv);
                 currentPage++; setTimeout(generateNextPage, 1);
             }
