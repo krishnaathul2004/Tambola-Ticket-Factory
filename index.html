@@ -603,10 +603,11 @@
                     }
                     
                     // --- UPDATED: INJECT WATERMARK DYNAMICALLY INTO TICKET BOTTOM ROW ---
+                       // Locate this block in your loop:
                     let watermarkHTML = (isPremium === true) ? '' : `<span class="ticket-watermark-label" style="color: ${compFontC};">FACTORY TICKET</span>`;
                     
-                    ticketHTML += `</table><div class="ticket-footer-row">${watermarkHTML}<div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div></div>`; 
-                    grid.innerHTML += ticketHTML;
+                    // Ensure the footer row contains the flex items correctly
+                    ticketHTML += `</table><div class="ticket-footer-row">${watermarkHTML}<div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div></div>`;
                 });
 
                 grid.style.gridTemplateRows = "repeat(6, 1fr)";
