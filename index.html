@@ -31,10 +31,10 @@
             width: 380px; 
             background: var(--panel-bg); 
             border-right: 1px solid var(--border-color); 
-            padding: 20px; 
+            padding: 25px; 
             display: flex; 
             flex-direction: column; 
-            gap: 15px; 
+            gap: 24px; 
             overflow-y: auto; 
             flex-shrink: 0;
             box-shadow: 5px 0 25px rgba(0,0,0,0.3);
@@ -48,6 +48,7 @@
             padding: 16px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
+            margin-bottom: 5px;
         }
         .brand-banner h1 { font-size: 1.5rem; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; margin-bottom: 4px; }
         .brand-banner p { font-size: 0.78rem; color: rgba(255, 255, 255, 0.9); font-weight: 500; line-height: 1.3; }
@@ -56,10 +57,10 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
         .showcase-title { font-size: 0.8rem; font-weight: 700; color: #f472b6; text-transform: uppercase; letter-spacing: 0.5px; }
         .showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
@@ -68,22 +69,22 @@
             display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.04);
         }
 
-        .form-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
-        label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; }
+        .form-group { display: flex; flex-direction: column; gap: 10px; position: relative; } 
+        label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; letter-spacing: 0.3px; }
         
         .helper-text { 
             font-size: 0.75rem; 
             color: #cbd5e1; 
             line-height: 1.4; 
             background: rgba(255, 255, 255, 0.07); 
-            padding: 8px 12px; 
+            padding: 10px 12px; 
             border-radius: 8px; 
             border-left: 4px solid #f472b6; 
         }
 
         input[type="text"], input[type="number"] { 
             width: 100%; 
-            padding: 10px 12px; 
+            padding: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.2); 
             border-radius: 8px; 
             font-size: 0.95rem; 
@@ -101,7 +102,7 @@
         .custom-file-btn {
             background: #6366f1;
             color: white;
-            padding: 10px 16px;
+            padding: 11px 16px;
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -112,13 +113,13 @@
         }
         .file-name-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .color-pickers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .color-pickers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .color-field { 
             display: flex; 
             align-items: center; 
             gap: 8px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            padding: 8px 12px; 
+            padding: 10px 12px; 
             border-radius: 8px; 
             background: rgba(0, 0, 0, 0.15); 
         }
@@ -128,7 +129,7 @@
         .btn-action { 
             background: var(--button-gradient); 
             color: white; 
-            padding: 14px; 
+            padding: 15px; 
             border: none; 
             border-radius: 8px; 
             font-size: 1rem; 
@@ -136,7 +137,7 @@
             cursor: pointer; 
             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
             transition: all 0.2s; 
-            margin-top: 5px; 
+            margin-top: 10px; 
         }
         .btn-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5); }
 
@@ -227,18 +228,38 @@
         .brand-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.3px; }
         .ticket-id { font-size: 8pt; font-family: monospace; opacity: 0.9; letter-spacing: 0.5px; }
         
-        .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #ffffff; border-radius: 4px; overflow: hidden; }
+        .tambola-table { width: 100%; border-collapse: collapse; table-layout: fixed; border-radius: 4px; overflow: hidden; }
         .tambola-table td { height: 33px; text-align: center; font-size: 14pt; font-weight: 800; width: 11.11%; vertical-align: middle; }
 
-        .ticket-footer-label {
-            text-align: center; font-size: 7.5pt; font-weight: bold; text-transform: uppercase;
-            letter-spacing: 0.6px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 8px;
+        /* Footer flex configuration to hold event name and bottom-left watermark tag */
+        .ticket-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 6.5pt;
+            font-weight: bold;
+            margin-top: 5px;
+            padding: 0 4px;
+            font-family: sans-serif;
         }
-
-        /* Page Watermark Layout CSS */
-        .page-watermark {
-            position: absolute; bottom: 5px; right: 15px; font-size: 8pt; font-weight: bold;
-            color: rgba(0,0,0,0.25); font-family: sans-serif; pointer-events: none;
+        .ticket-footer-label {
+            flex: 1;
+            text-align: center;
+            font-size: 7.5pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 4px;
+        }
+        .ticket-watermark-label {
+            font-size: 5.5pt;
+            font-weight: bold;
+            opacity: 0.5;
+            white-space: nowrap;
+            text-transform: uppercase;
         }
 
         /* --- MONETIZATION MODAL OVERLAY --- */
@@ -259,7 +280,6 @@
         
         .pricing-badge { background: #fff1f2; color: #db2777; font-size: 1.4rem; font-weight: 800; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 15px; border: 1px dashed #f43f5e; transition: all 0.2s; }
         
-        /* --- PROMO COUPON DECORATIVE LAYOUTS --- */
         .coupon-section {
             display: flex; gap: 8px; margin-bottom: 15px; background: #f1f5f9; padding: 10px; border-radius: 8px; align-items: center;
         }
@@ -288,25 +308,20 @@
     <div class="premium-modal" id="paywall-modal">
         <div class="modal-card">
             <h3 id="paywall-title">👑 Unlock Premium Access</h3>
-            <p id="paywall-desc">You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!</p>
+            <p id="paywall-desc">You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove ticket watermarks!</p>
             
-            <div class="pricing-badge" id="modal-price-tag">24-Hour Match Pass: ₹199 Only</div>
+            <div class="pricing-badge" id="modal-price-tag">24-Hour Match Pass: ₹99 Only</div>
             
             <div class="coupon-section">
-                <input type="text" class="coupon-input" id="coupon-field" placeholder="Enter Promo Coupon Code">
+                <input type="text" class="coupon-input" id="coupon-field" placeholder="Enter Coupon Code">
                 <button class="btn-coupon" id="btn-apply-coupon">Apply</button>
             </div>
             <div class="coupon-msg" id="coupon-status-text"></div>
 
             <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 8px;">
-                1. Pay via UPI to: <span style="color:#7c3aed; font-weight:800;">athulpachu2004-1@okaxis</span><br>
-                2. Note down your current Game Identifier exactly.<br>
-                3. Send amount: <span style="color:#db2777; font-weight:900;" id="amt-text">₹199</span> and share screenshot to WhatsApp!
-                <a href="https://wa.me/918281260024?text=Hi%20Athul,%20I%20have%20made%20the%20payment%20for%20Tambola%20Factory.%20Here%20is%20my%20screenshot." 
-                   target="_blank" 
-                   style="color:#10b981; font-weight:800; text-decoration:underline;">
-                   Click here to send the screenshot on WhatsApp 📲
-                </a>
+                1. Pay via UPI to: <span style="color:#7c3aed; font-weight:800;">yourupi@okaxis</span><br>
+                2. Note down your current Match Name exactly.<br>
+                3. Send amount: <span style="color:#db2777; font-weight:900;" id="amt-text">₹99</span> and share screenshot to WhatsApp!
             </p>
             
             <input type="text" class="modal-input" id="premium-key-input" placeholder="Enter Your Unique Match Key">
@@ -336,7 +351,7 @@
 
         <div class="form-group">
             <label>Company / Club Name</label>
-            <input type="text" id="input-company" value="Your Company Name">
+            <input type="text" id="input-company" value="Your Company Name)">
         </div>
 
         <div class="form-group">
@@ -354,12 +369,9 @@
         </div>
 
         <div class="form-group">
-            <label>Game Set Identifier (Lock Numbers)</label>
+            <label>Match / Event Name (Locks Numbers)</label>
             <div class="helper-text">Want the <strong>exact same numbers</strong> in a different color theme? Keep this name identical.</div>
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="input-seed-string" value="Sunday Premium Match">
-                <button id="btn-random-phrase" style="padding:0 14px; background:#6366f1; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">🎲 New</button>
-            </div>
+            <input type="text" id="input-seed-string" value="Sunday Premium Match">
         </div>
 
         <div class="form-group">
@@ -369,6 +381,7 @@
                 <div class="color-field"><input type="color" id="color-bg" value="#fff5f5"><label for="color-bg">Card BG</label></div>
                 <div class="color-field"><input type="color" id="color-border" value="#f43f5e"><label for="color-border">Border</label></div>
                 <div class="color-field"><input type="color" id="color-grid" value="#f43f5e"><label for="color-grid">Grid Line</label></div>
+                <div class="color-field"><input type="color" id="color-cell-bg" value="#ffffff"><label for="color-cell-bg">Ticket BG</label></div>
                 <div class="color-field"><input type="color" id="color-company-font" value="#9e1c3f"><label for="color-company-font">Company</label></div>
                 <div class="color-field"><input type="color" id="color-font" value="#000000"><label for="color-font">Numbers</label></div>
             </div>
@@ -446,6 +459,7 @@
             } catch(e) { return false; }
         }
 
+        // Checks active validation tokens
         function checkPremiumStatus() {
             const companyName = document.getElementById('input-company').value;
             const seedText = document.getElementById('input-seed-string').value;
@@ -521,13 +535,6 @@
         // --- 4. UI INTERFACE CORE ---
         let base64Logo = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ec4899'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.133 9.21l8.2-1.192z'/></svg>";
 
-        document.getElementById('btn-random-phrase').addEventListener('click', function() {
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-            document.getElementById('input-seed-string').value = `${randomColor} ${randomAnimal} Match ${Math.floor(Math.random()*90)+1}`;
-            startGeneration();
-        });
-
         document.getElementById('input-logo').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -558,7 +565,7 @@
             if (!isPremium && pageCount > 10) {
                 document.getElementById('input-pages').value = 10; pageCount = 10;
                 document.getElementById('paywall-title').innerText = "👑 Unlock Premium Access";
-                document.getElementById('paywall-desc').innerText = "You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove footer watermarks!";
+                document.getElementById('paywall-desc').innerText = "You've reached the free generation limit (Max 10 pages). Upgrade to unlock up to 100 pages for this match configuration and completely remove ticket watermarks!";
                 document.getElementById('paywall-modal').classList.add('active');
             }
 
@@ -566,6 +573,7 @@
             const bgC = document.getElementById('color-bg').value;
             const borderC = document.getElementById('color-border').value;
             const gridC = document.getElementById('color-grid').value;
+            const cellBgC = document.getElementById('color-cell-bg').value; 
             const compFontC = document.getElementById('color-company-font').value;
             const fontC = document.getElementById('color-font').value;
 
@@ -588,31 +596,27 @@
                     for (let r = 0; r < 3; r++) {
                         ticketHTML += '<tr>';
                         for (let c = 0; c < 9; c++) {
-                            let val = ticket[r][c]; let cellStyle = `border: 1px solid ${gridC}; color: ${fontC}; font-family: sans-serif; font-weight:800;`;
-                            ticketHTML += (val === 0) ? `<td style="${cellStyle} background-color: #ffffff;">&nbsp;</td>` : `<td style="${cellStyle} background-color: #ffffff;">${val}</td>`;
+                            let val = ticket[r][c]; let cellStyle = `border: 1px solid ${gridC}; color: ${fontC}; font-family: sans-serif; font-weight:800; background-color: ${cellBgC};`;
+                            ticketHTML += (val === 0) ? `<td style="${cellStyle}">&nbsp;</td>` : `<td style="${cellStyle}">${val}</td>`;
                         }
                         ticketHTML += '</tr>';
                     }
-                    ticketHTML += `</table><div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div>`; grid.innerHTML += ticketHTML;
+                    
+                    // --- UPDATED: INJECT WATERMARK DYNAMICALLY INTO TICKET BOTTOM ROW ---
+                    let watermarkHTML = (isPremium === true) ? '' : `<span class="ticket-watermark-label" style="color: ${compFontC};">FACTORY TICKET</span>`;
+                    
+                    ticketHTML += `</table><div class="ticket-footer-row">${watermarkHTML}<div class="ticket-footer-label" style="color: ${compFontC};">${seedText}</div></div></div>`; 
+                    grid.innerHTML += ticketHTML;
                 });
 
                 grid.style.gridTemplateRows = "repeat(6, 1fr)";
                 pageDiv.appendChild(grid);
-
-                if (isPremium !== true) {
-                    const watermark = document.createElement('div'); watermark.className = 'page-watermark';
-                    watermark.innerText = "Generated By: Tambola Ticket Factory"; pageDiv.appendChild(watermark);
-                }
-
                 canvas.appendChild(pageDiv);
                 currentPage++; setTimeout(generateNextPage, 1);
             }
             setTimeout(generateNextPage, 1);
         }
 
-        // Modal Action Configurations & Live Coupon Checking Engine
-        document.getElementById('btn-close-modal').addEventListener('click', () => { document.getElementById('paywall-modal').classList.remove('active'); });
-        
         document.getElementById('btn-apply-coupon').addEventListener('click', function() {
             const entered = document.getElementById('coupon-field').value.trim().toUpperCase();
             const status = document.getElementById('coupon-status-text');
@@ -620,21 +624,11 @@
             const amtText = document.getElementById('amt-text');
 
             status.style.display = "block";
-            if (entered === "FIRSTGAME") {
-                priceTag.innerText = "🎉 Coupon Applied: ₹99 Only!";
-                amtText.innerText = "₹99";
-                status.innerText = "Success: 'FIRSTGAME' applied (50% Off)";
+            if (entered === "TAMB24") {
+                priceTag.innerText = "🎉 Coupon Applied: ₹89 Only!";
+                amtText.innerText = "₹89";
+                status.innerText = "Success: 'TAMB24' applied (10% Off)";
                 status.style.color = "#10b981";
-            } else if (entered === "NOICLUB") {
-                priceTag.innerText = "🎉 Club Partner Pass: ₹149 Only!";
-                amtText.innerText = "₹149";
-                status.innerText = "Success: 'NOICLUB' active (Special rate)";
-                status.style.color = "#10b981";
-            } else if (entered === "FREEPASS") {
-                priceTag.innerText = "🎉 Promo Unlocked: ₹0 (FREE)!";
-                amtText.innerText = "₹0 (Use standard bypass TMB-777777)";
-                status.innerText = "Bypass Mode Active: Enter key 'TMB-777777'";
-                status.style.color = "#8b5cf6";
             } else {
                 status.innerText = "Invalid Coupon Code. Try again.";
                 status.style.color = "#ef4444";
@@ -647,11 +641,8 @@
             const keyEntered = document.getElementById('premium-key-input').value.trim();
             const idNormalized = (companyName + seedText).replace(/\s+/g, '');
             
-            // Allow universal free pass structure or verified crypt key tracking configurations
-            if (keyEntered === "TMB-777777" || verifyMatchKeyStructure(companyName, seedText, keyEntered)) {
-                // If it is a bypass promo key, mock seed a current valid hours baseline tag
-                let assignedKey = (keyEntered === "TMB-777777") ? `TMB-77777-${Math.floor(Date.now() / 3600000) + 1420}` : keyEntered;
-                localStorage.setItem("tmb_pass_" + idNormalized, assignedKey);
+            if (verifyMatchKeyStructure(companyName, seedText, keyEntered)) {
+                localStorage.setItem("tmb_pass_" + idNormalized, keyEntered);
                 localStorage.setItem("tmb_dl_count_" + idNormalized, 0); 
                 document.getElementById('paywall-modal').classList.remove('active');
                 alert("Success! Premium pass activated successfully.");
