@@ -34,7 +34,7 @@
             padding: 25px; 
             display: flex; 
             flex-direction: column; 
-            gap: 24px; /* Increased gap between major items */
+            gap: 24px; 
             overflow-y: auto; 
             flex-shrink: 0;
             box-shadow: 5px 0 25px rgba(0,0,0,0.3);
@@ -69,7 +69,7 @@
             display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.04);
         }
 
-        .form-group { display: flex; flex-direction: column; gap: 10px; position: relative; } /* Increased internal padding spacing */
+        .form-group { display: flex; flex-direction: column; gap: 10px; position: relative; }
         label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; letter-spacing: 0.3px; }
         
         .helper-text { 
@@ -299,10 +299,13 @@
             </div>
             <div class="coupon-msg" id="coupon-status-text"></div>
 
-            <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 8px;">
+            <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 8px; line-height: 1.4;">
                 1. Pay via UPI to: <span style="color:#7c3aed; font-weight:800;">yourupi@okaxis</span><br>
                 2. Note down your current Match Name exactly.<br>
-                3. Send amount: <span style="color:#db2777; font-weight:900;" id="amt-text">₹99</span> and share screenshot to WhatsApp!
+                3. Send amount: <span style="color:#db2777; font-weight:900;" id="amt-text">₹99</span> and share screenshot to WhatsApp!<br>
+                <a id="btn-whatsapp-share" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; background: #25D366; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; border: 1px solid rgba(0,0,0,0.1);">
+                    💬 Chat on WhatsApp to Activate
+                </a>
             </p>
             
             <input type="text" class="modal-input" id="premium-key-input" placeholder="Enter Your Unique Match Key">
@@ -316,7 +319,7 @@
 
     <div class="control-panel">
         <div class="brand-banner">
-            <h1>🎰 TAMBOLA FACTORY</h1>
+            <h1>🎰TAMBOLA FACTORY</h1>
             <p>Professional Tambola Ticket Generator for Clubs, Resorts & Events</p>
         </div>
 
@@ -332,7 +335,7 @@
 
         <div class="form-group">
             <label>Company / Club Name</label>
-            <input type="text" id="input-company" value="NOI (KOCHI)">
+            <input type="text" id="input-company" value="Your Company Name">
         </div>
 
         <div class="form-group">
@@ -535,6 +538,11 @@
             
             const isPremium = checkPremiumStatus();
 
+            // Setup dynamic WhatsApp text sharing configurations
+            const targetPhoneNumber = "918281260024"; // <-- Put your actual WhatsApp support number here
+            const msgTemplate = `Hello, I want to activate my Tambola Factory Match Pass.\n\n🏢 Club/Company: ${companyName}\n🎟️ Match Name: ${seedText}\n\nI've attached my payment screenshot below. Please send my key!`;
+            document.getElementById('btn-whatsapp-share').href = `https://wa.me/${targetPhoneNumber}?text=${encodeURIComponent(msgTemplate)}`;
+
             if (isPremium === "EXHAUSTED") {
                 document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
                 document.getElementById('paywall-desc').innerText = "This premium match pass has safely reached its max download cap of 6 high-res PDF exports. Please generate a fresh game set or key for your next round!";
@@ -553,7 +561,7 @@
             const bgC = document.getElementById('color-bg').value;
             const borderC = document.getElementById('color-border').value;
             const gridC = document.getElementById('color-grid').value;
-            const cellBgC = document.getElementById('color-cell-bg').value; // Added Custom Cell BG Value
+            const cellBgC = document.getElementById('color-cell-bg').value; 
             const compFontC = document.getElementById('color-company-font').value;
             const fontC = document.getElementById('color-font').value;
 
@@ -597,6 +605,11 @@
             }
             setTimeout(generateNextPage, 1);
         }
+
+        // Action Listener to close modal on cancel button trigger
+        document.getElementById('btn-close-modal').addEventListener('click', function() {
+            document.getElementById('paywall-modal').classList.remove('active');
+        });
 
         document.getElementById('btn-apply-coupon').addEventListener('click', function() {
             const entered = document.getElementById('coupon-field').value.trim().toUpperCase();
