@@ -303,7 +303,7 @@
 
             <p style="font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 8px; line-height: 1.4;">
                 1. Pay via UPI to: <span style="color:#7c3aed; font-weight:800;">athulpachu2004-1@okaxis</span><br>
-                2. Note down your current Match Name exactly.<br>
+                2. Note down your current Event ID exactly.<br>
                 3. Send amount: <span style="color:#db2777; font-weight:900;" id="amt-text">₹99</span> and share screenshot to WhatsApp!<br>
                 <a id="btn-whatsapp-share" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; background: #25D366; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; border: 1px solid rgba(0,0,0,0.1);">
                     💬 Chat on WhatsApp to Activate
@@ -321,7 +321,7 @@
 
     <div class="control-panel">
         <div class="brand-banner">
-            <h1>TAMBOLA FACTORY</h1>
+            <h1>🎰TAMBOLA FACTORY</h1>
             <p>Professional Tambola Ticket Generator for Clubs, Resorts & Events</p>
         </div>
 
@@ -336,8 +336,8 @@
         </div>
 
         <div class="form-group">
-            <label>Company / Club Name</label>
-            <input type="text" id="input-company" value="Your Company Name">
+            <label>Club Name (Keep spelling identical for reprints)</label>
+            <input type="text" id="input-company" value="Naval Officers Institute">
         </div>
 
         <div class="form-group">
@@ -355,8 +355,8 @@
         </div>
 
         <div class="form-group">
-            <label>Match / Event Name (Locks Numbers)</label>
-            <div class="helper-text">Want the <strong>exact same numbers</strong> in a different color theme? Keep this name identical.</div>
+            <label>Unique Event ID</label>
+            <div class="helper-text">Using the <strong>same Event ID</strong> will always generate the exact same ticket setup sequence.</div>
             <input type="text" id="input-seed-string" value="Sunday Premium Match">
         </div>
 
@@ -422,7 +422,9 @@
         }
         function getNextRandom() {
             m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & BIT_MASK; m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & BIT_MASK;
-            let result = ((m_z << 16) + m_w) & BIT_MASK; result /= 4294967296; return result + 0.5;
+            let result = ((m_z << 16) + m_w) & BIT_MASK; 
+            // FIXED UNBIASED RNG SHUFFLE INTERRUPT LOGIC RANGE [0, 1)
+            return (result >>> 0) / 4294967296;
         }
         function seededShuffle(array) {
             for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(getNextRandom() * (i + 1)); let temp = array[i]; array[i] = array[j]; array[j] = temp; }
@@ -550,14 +552,14 @@
             
             const isPremium = checkPremiumStatus();
 
-            // Dynamic WhatsApp configuration setup
+            // DYNAMIC LINK GENERATOR FOR TARGET INTEGRATION (8281260024)
             const targetPhoneNumber = "918281260024"; 
-            const msgTemplate = `Hello, I want to activate my Tambola Factory Match Pass.\n\n🏢 Club/Company: ${companyName}\n🎟️ Match Name: ${seedText}\n\nI've attached my payment screenshot below. Please send my key!`;
+            const msgTemplate = `Hello, I want to activate my Tambola Factory Match Pass.\n\n🏢 Club/Company: ${companyName}\n🎟️ Event ID: ${seedText}\n\nI've attached my payment screenshot below. Please send my key!`;
             document.getElementById('btn-whatsapp-share').href = `https://wa.me/${targetPhoneNumber}?text=${encodeURIComponent(msgTemplate)}`;
 
             if (isPremium === "EXHAUSTED") {
                 document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
-                document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Match / Event Name to set up a new layout range!";
+                document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Event ID to set up a new layout range!";
                 document.getElementById('paywall-modal').classList.add('active');
                 return;
             }
@@ -649,8 +651,6 @@
             
             if (verifyMatchKeyStructure(companyName, seedText, keyEntered)) {
                 localStorage.setItem("tmb_pass_" + idNormalized, keyEntered);
-                // When activating premium, we DO NOT reset the count back to 0, 
-                // preserving their current match downloads so they have 6 max total.
                 document.getElementById('paywall-modal').classList.remove('active');
                 alert("Success! Premium pass activated successfully.");
                 startGeneration();
@@ -672,7 +672,7 @@
             
             if (isPremium === "EXHAUSTED") {
                 document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
-                document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Match / Event Name to set up a new layout range!";
+                document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Event ID to set up a new layout range!";
                 document.getElementById('paywall-modal').classList.add('active');
                 return;
             }
@@ -686,11 +686,11 @@
                 
                 btn.disabled = false; btn.innerText = "📥 Download High-Res PDF";
                 
-                // Refresh constraints logic layout elements immediately post compile execution
+                // Refresh configuration constraints layout elements immediately post compile execution range
                 const updatedStatus = checkPremiumStatus();
                 if (updatedStatus === "EXHAUSTED") {
                     document.getElementById('paywall-title').innerText = "🛑 Download Limit Exhausted";
-                    document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Match / Event Name to set up a new layout range!";
+                    document.getElementById('paywall-desc').innerText = "This match configuration has reached its limit of 6 high-res PDF downloads. To generate/download more, please change your Event ID to set up a new layout range!";
                     document.getElementById('paywall-modal').classList.add('active');
                 }
             });
